@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-auto">
+            <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+        </div>
+    </div>
+
+    <hr>
+
+     <!-- Displaying items -->
+    <div class="container" *ngIf="!showAddForm && !selectedItem._id">
+       
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of support_data">
+                    <td>
+                        <img [src]="'https://snfbackendfinal.sumagodemo.com/uploads/' + item.imageUrl" alt="image" class="img-fluid"
+                            style="max-height: 150px; max-width: 200px;" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" (click)="onSelect(item)">Edit</button> &nbsp;
+                        <button class="btn btn-danger" (click)="deleteSupporter(item._id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adding a new item form -->
+    <div class="container mb-3" *ngIf="showAddForm || selectedItem._id">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ selectedItem._id ? 'Edit Supporters Image' : 'Add Supporters Image' }}
+                        </h2>
+                        <form [formGroup]="supporterForm"
+                            (ngSubmit)="selectedItem._id ? updateSupporter(selectedItem._id) : addSupporter()">
+                            <div class="mb-3">
+                                <label for="namesup" class="form-label">Name:</label>
+                                <input type="text" id="namesup" class="form-control" formControlName="namesup" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image:</label>
+                                <input type="file" id="image" class="form-control" (change)="onFileChange($event)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">{{ selectedItem._id ? 'Update' : 'Submit'
+                                }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

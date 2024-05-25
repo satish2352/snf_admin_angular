@@ -1,0 +1,28 @@
+<h3>Contact Data</h3>
+
+<!-- Display existing form data -->
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Contact</th>
+      <th>Subject</th>
+      <!-- <th>EnquiryType</th> -->
+      <th>Message</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let formData of formDataList">
+      <td>{{ formData.name }}</td>
+      <td>{{ formData.email }}</td>
+      <td>{{ formData.contact }}</td>
+      <td>{{ formData.subject }}</td>
+      <!-- <td>{{ formData.enquiryType }}</td> -->
+      <td>{{ formData.message }}</td>
+      <!-- <td><button (click)="deleteFormData(formData.id)">Delete</button></td> -->
+      <td><button class="btn btn-danger" (click)="onDelete(formData._id)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>

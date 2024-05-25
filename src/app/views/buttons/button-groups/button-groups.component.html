@@ -1,0 +1,91 @@
+<h1>snf in new papers</h1>
+<div *ngIf="showAddForm">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Add News Papers/Media </h2>
+                        <form [formGroup]="snf_in_news_papers_Form" (ngSubmit)="addsnf_in_news_papers()">
+                            <div class="mb-3">
+                                <label for="carrosalName" class="form-label">Name:</label>
+                                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="carrosalImage" class="form-label">Image:</label>
+                                <input type="file" id="carrosalImage" class="form-control"
+                                    (change)="onFileChange($event)" />
+                            </div>
+                            <button class="btn btn-primary  mt-3" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="text-center" *ngIf="!showAddForm && !showEditForm">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th class="text-right">News Papers/Media Title</th>
+                <th class="text-right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of snf_in_news_papers_Data">
+                <td>
+                    <img [src]="'https://snfbackendfinal.sumagodemo.com/uploads/' + item.imageUrl" alt="image"
+                        style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
+                </td>
+                <td class="text-right">{{ item.name }}</td>
+                <td class="text-right">
+                    <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
+                    <button class="btn btn-danger" (click)="deletesnf_in_news_papers(item._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<div *ngIf="showEditForm">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Edit News Papers/Media</h2>
+                        <form [formGroup]="snf_in_news_papers_Form"
+                            (ngSubmit)="updatesnf_in_news_papers(selectedItem._id)">
+                            <div class="mb-3">
+                                <label for="carrosalName" class="form-label">Name:</label>
+                                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="carrosalImage" class="form-label">Image:</label>
+                                <input type="file" id="carrosalImage" class="form-control"
+                                    (change)="onFileChange($event)" />
+                            </div>
+                            <button class="btn btn-primary mt-3" type="submit">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
