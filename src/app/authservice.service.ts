@@ -21,11 +21,10 @@
 //       return of(false); // Returning an Observable of false if login fails
 //     }
 //   }
-//   logout(): void {
-//     console.log('Logging out...');
-//     this.isLoggedIn = false;
-//     localStorage.removeItem('isLoggedIn');
-//   }
+
+ 
+
+
 
 //   isAuthenticated(): boolean {
 //     console.log('Checking authentication status...');
@@ -38,6 +37,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+//import { log } from 'console';
 import { BehaviorSubject,  Observable,  of, tap, throwError } from 'rxjs';
 
 @Injectable({
@@ -45,7 +45,7 @@ import { BehaviorSubject,  Observable,  of, tap, throwError } from 'rxjs';
 })
 export class AuthserviceService {
   
-  public Url = 'https://snfbackendfinal.sumagodemo.com/login/login'; ///live
+  public apiUrl = 'https://snf.backend.socialforumindia.com/auth/login'; ///live
   // private apiUrl = 'https://trainingapi.sumagotest.in/public/api/'; ////test
   // private apiUrl = 'http://trainingadmin.sumagotest.in/public/api/'; 
   
@@ -66,19 +66,37 @@ export class AuthserviceService {
   //   }
   //   return throwError("Failed")
   // }
-  
-  setToken(token:any):void{
-   this.token = localStorage.setItem('access_token',token);
-  }
+  // 18 june
+  //  setToken(token:any):void{
+  //   this.token = localStorage.setItem('access_token', this.token);
+  //  }
 
-  getToken():string | null {
-  return  localStorage.getItem('access_token')
+  // setToken(token: string): void {
+  //   this.token.token = token;
+  //   localStorage.setItem('access_token', this.token.token);
+
+  // }
+
+  // getToken():string | null {
+  // return  localStorage.getItem('access_token')
+  // }
+  setToken(token: any): void {
+    localStorage.setItem('access_token', token);
+    // localStorage.setItem('password',password);
+    //     localStorage.setItem('email',email)
   }
- 
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+  clearToken(): void {
+    this.token = null;
+    localStorage.removeItem('access_token');
+  }
 
   isLoggedIn(){
      return this.getToken()!==null
   }
+  
   // logout(): Observable<any> {
   //   const url = ${this.apiUrl}logout;
   //   const headers = new HttpHeaders().set('Authorization', Bearer ${localStorage.getItem('access_token')});
@@ -96,29 +114,73 @@ export class AuthserviceService {
   //     })
   //   );
   // }
-  clearToken() {
-    this.token = null;
-  }
+  // clearToken() {
+  //   this.token = null;
+  // }
   
   // logout() {
     
   //   localStorage.removeItem('access_token');
   //   this.router.navigate(['login']);
   // }
-  login(email: any, password: any): Observable<any> {
-    // const url = ${this.Url}login;
-  
 
-    return this.http.post(this.Url, { email, password }).pipe(
-      tap((response: any) => {
-        this.setToken(response.access_token);
-        // this.setUser(response.id,response.username,response.email)
-        // localStorage.setItem('access_token', response.token);
-        localStorage.setItem('username',response.username)
-        localStorage.setItem('id',response.id)
-        return response.access_token;
+
+  //Logout
+
+
+  
+  logout(): void {
+    console.log('Logging out...'); 
+    localStorage.removeItem('token'); 
+    console.log('Token removed:', localStorage.getItem('token')); 
+  }
+  
+  login(email: any, password: any): Observable<any> {
+    const url = `${this.apiUrl}`;
+   return this.http.post(this.apiUrl, { email, password }).pipe(
+     tap((response: any) => {
+      console.log("response",response);
+      
+       this.setToken(response.token);
+        // .this.setUser(response.id,response.username,response.email)
+       
+        
+        localStorage.setItem('password',response.password);
+        localStorage.setItem('email',response.email)
+        // localStorage.setItem('id',response.id)
+        localStorage.setItem('access_token', response.token);
+        console.log(response.token);
+         return response;
+         
+         console.log('Done');
       })
-    );
+  );
   }
  
+
+// login(email: any, password: any): Observable<any> {
+//   const url = `${this.apiUrl}`;
+//   return this.http.post(url, { email, password }).pipe(
+//     tap((response: any) => {
+//       console.log("Login response:", response);
+      
+//       // Assuming response contains access_token, email, and password properties
+//       this.setToken(response.access_token);
+//       localStorage.setItem('email', response.email);
+//       localStorage.setItem('password', password); // Store the password securely
+//     })
+//   );
+// }
+
+// login(email: string, password: string): Observable<any> {
+//   return this.http.post(this.Url, { email, password }).pipe(
+//     tap((response: any) => {
+//       this.setToken(response.access_token);
+//       localStorage.setItem('email', response.email);
+//       localStorage.setItem('id', response.id);
+//       this.loggedIn.next(true);
+//     })
+//   );
+// }
+
 }

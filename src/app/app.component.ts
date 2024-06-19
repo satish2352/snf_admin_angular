@@ -4,15 +4,17 @@ import { Router, NavigationEnd } from '@angular/router';
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from './icons/icon-subset';
 import { Title } from '@angular/platform-browser';
+import { AuthserviceService } from './authservice.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-root', 
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
   title = 'Admin Pannel SNF Website';
-
+  
   constructor(
+    private authService:AuthserviceService,
     private router: Router,
     private titleService: Title,
     private iconSetService: IconSetService
@@ -22,11 +24,23 @@ export class AppComponent implements OnInit {
     iconSetService.icons = { ...iconSubset };
   }
 
-  ngOnInit(): void {
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
+  // ngOnInit(): void {
+  //   this.router.events.subscribe((evt) => {
+  //     if (!(evt instanceof NavigationEnd)) {
+  //       return;
+  //     }
+  //   });
+  // }
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/logout') {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
       }
     });
   }
 }
+  
+

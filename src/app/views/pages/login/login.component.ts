@@ -2,54 +2,82 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthserviceService } from '../../../authservice.service';
 import { Subscription } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
-  SignInForm= new FormGroup({
+export class LoginComponent implements OnInit {
+  signInForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  });
 
-    email: new FormControl(''),
-    password:new FormControl('')
-  })
+  constructor(private auth: AuthserviceService, private router: Router) { }
 
-  constructor(private auth:AuthserviceService,private router:Router){}
-  
-  ngOnInit(): void {
-  
-    
-  }
-  
-  token:string =''
-  
-  onSubmit():void{
-    console.log(this.SignInForm.valid);
-    const { email, password } = this.SignInForm.value;
-    if(this.SignInForm.valid){
-  
-      this.auth.login(email,password).subscribe((result)=>{
-      alert("Success")
-          // console.log(result.access_token);
-          console.log(result);   
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.signInForm.valid) {
+      const { email, password } = this.signInForm.value;
+
+      this.auth.login(email, password).subscribe(
+        (result: any) => {
+          console.log(result);
+          this.auth.setToken(result.access_token);
+          localStorage.setItem('email',result.email);
+          localStorage.setItem('password',result.password)
+          localStorage.setItem('access_token',result.token);
+          console.log(this.auth.getToken());
           
-          this.auth.setToken(result.access_token)
-        //  console.log( this.auth.getToken());
           this.router.navigate(['main']);
-  
-      
-         
-      },
-      (err:Error)=>{
-        console.log(err);
-        (err.message);
-      }
-  
-      )
+        },
+        (err: any) => {
+          console.error(err);
+          if (err.status === 404) {
+            alert(err.error.message); // Display error message from the server
+          } else {
+            alert('An error occurred. Please try again later.');
+          }
+        }
+      );
+    } else {
+      this.signInForm.markAllAsTouched();
     }
-    
-  
   }
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']); // Navigate to login page after logout
   }
+  // onSubmit(): void {
+  //   if (this.signInForm.valid) {
+  //     const { email, password } = this.signInForm.value;
   
+  //     this.auth.login(email, password).subscribe(
+  //       (result: any) => {
+  //         console.log("Login result:", result);
+  //         // Assuming 'result' contains access_token, email, and password properties
+  
+  //         // Store credentials securely
+  //         localStorage.setItem('email', result.email);
+  //         localStorage.setItem('password', result.password); // Store the password securely
+  //         localStorage.setItem('access_token', result.access_token);
+  
+  //         this.router.navigate(['main']);
+  //       },
+  //       (err: any) => {
+  //         console.error(err);
+  //         if (err.status === 404) {
+  //           alert(err.error.message); // Display error message from the server
+  //         } else {
+  //           alert('An error occurred. Please try again later.');
+  //         }
+  //       }
+  //     );
+  //   } else {
+  //     this.signInForm.markAllAsTouched();
+  //   }
+  // }
+}

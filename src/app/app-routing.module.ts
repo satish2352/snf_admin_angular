@@ -116,6 +116,7 @@ const routes: Routes = [
       title: 'Register Page'
     }
   },
+  { path: 'logout', redirectTo: '/', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' }
 ];
 @NgModule({

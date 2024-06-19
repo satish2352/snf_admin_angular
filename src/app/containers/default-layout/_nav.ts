@@ -300,5 +300,12 @@ export const navItems: INavData[] = [
     url: 'https://www.socialforumindia.com/',
     iconComponent: { name: 'cil-layers' },
     attributes: { target: '_blank' }
-  }
+  },
+  //LogOut
+  {
+    name: 'Logout',
+    url: '/logout', // Navigate to the logout route
+    iconComponent: { name: 'cil-account-logout' }
+}
+  
 ];
