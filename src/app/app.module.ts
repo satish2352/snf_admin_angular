@@ -3,7 +3,7 @@ import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@a
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Import routing module
@@ -13,11 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AuthGuard} from './auth.guard';
 import { FormsModule } from '@angular/forms';
-
+import {JwtInterceptor} from './jwt.interceptor'
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { HttpClientModule } from '@angular/common/http';
 
 import {
   AvatarModule,
@@ -83,8 +82,11 @@ const APP_CONTAINERS = [
   ],
   providers: [
     {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      // provide: LocationStrategy,
+      // useClass: HashLocationStrategy,
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
     },
     
     IconSetService,
