@@ -50,8 +50,8 @@ export class ColorsComponent implements OnInit {
     this.resetForm();
   }
 
-  toggleEditForm(item: any): void {
-    this.selectedItem = { ...item };
+  toggleEditForm(id: any): void {
+    this.selectedItem = id;
     this.showEditForm = true;
     this.showAddForm = false;
   }

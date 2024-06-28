@@ -11,7 +11,7 @@ export class ContactService {
   // }
 
   constructor(private http: HttpClient) { }
-  private contactUrl = 'https://snf.backend.socialforumindia.com/contact'; // Replace with your actual API URL
+  private contactUrl = 'http://localhost:5000/contact'; // Replace with your actual API URL
 
   createFormData(formData: any): Observable<any> {
     return this.http.post(`${this.contactUrl}/contact-data`, formData);
