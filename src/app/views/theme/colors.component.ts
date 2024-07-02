@@ -15,7 +15,8 @@ export class ColorsComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class ColorsComponent implements OnInit {
   initializeForm(): void {
     this.carrosalForm = this.fb.group({
       name: ['', Validators.required],
-      image: [null]
+      image: [null, Validators.required]
     });
   }
 
@@ -42,6 +43,7 @@ export class ColorsComponent implements OnInit {
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     this.carrosalForm.patchValue({ image: file });
+    this.carrosalForm.get('image')?.updateValueAndValidity();
   }
 
   toggleAddForm(): void {
@@ -64,33 +66,59 @@ export class ColorsComponent implements OnInit {
 
   addCarrosalItem(): void {
     const formData = new FormData();
-    formData.append('name', this.carrosalForm.value.name);
-    formData.append('image', this.carrosalForm.value.image);
+    
+    const nameControl = this.carrosalForm.get('name');
+    const imageControl = this.carrosalForm.get('image');
 
-    this.service.addCarrosalItem(formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchCarrosalData();
-        this.showAddForm = false;
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
+    if (nameControl && imageControl) {
+      formData.append('name', nameControl.value);
+
+      const file = imageControl.value;
+      if (file) {
+        formData.append('imageUrl', file);
+      } else {
+        console.error('Image file is not selected');
+        return;
       }
-    );
+
+      this.service.addCarrosalItem(formData).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchCarrosalData();
+          this.showAddForm = false;
+          this.showEditForm = false;
+          this.resetForm();
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      console.error('Form controls are not properly initialized');
+    }
   }
 
   updateCarrosalItem(id: number): void {
     const formData = new FormData();
-    formData.append('name', this.carrosalForm.value.name);
-    formData.append('image', this.carrosalForm.value.image);
+    const nameControl = this.carrosalForm.get('name');
+    const imageControl = this.carrosalForm.get('image');
+
+    if (nameControl) {
+      formData.append('name', nameControl.value);
+    }
+
+    const file = imageControl?.value;
+    if (file) {
+      formData.append('imageUrl', file);
+    }
 
     this.service.updateCarrosalItem(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchCarrosalData();
         this.showEditForm = false;
-        location.reload();
+        this.showAddForm = false; // Ensure the form is closed
+        this.resetForm();
       },
       (error) => {
         console.error(error);
@@ -98,16 +126,32 @@ export class ColorsComponent implements OnInit {
     );
   }
 
-  deleteCarrosalItem(id: number): void {
+  deleteCarrosalItem(id: number | undefined): void {
+    if (!id || id <= 0) {
+      console.error('Invalid ID for delete operation:', id);
+      return;
+    }
+    
+    console.log('Deleting item with ID:', id);
+  
     this.service.deleteCarrosalItem(id).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchCarrosalData();
-        location.reload();
+      () => {
+        console.log('Item deleted successfully');
+  
+       
+        this.carrosalData = this.carrosalData.filter((item: any) => item.id !== id);
+        console.log('Item deleted successfully');
+       
+        this.showAddForm = false;
+        this.showEditForm = false;
+        this.resetForm();
+      
       },
       (error) => {
-        console.error(error);
+        console.error('Error deleting item:', error);
+        
       }
     );
   }
+  
 }

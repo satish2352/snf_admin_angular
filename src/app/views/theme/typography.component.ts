@@ -48,8 +48,8 @@ export class TypographyComponent implements OnInit {
     if (this.supporterForm.valid) {
       const formData = new FormData();
       formData.append('namesup', this.supporterForm.value.namesup);
-      if (this.supporterForm.value.image) {
-        formData.append('image', this.supporterForm.value.image);
+      if (this.supporterForm.value.imageUrl) {
+        formData.append('imageUrl', this.supporterForm.value.imageUrl);
       }
 
       this.service.addSupporter(formData).subscribe(
@@ -75,8 +75,8 @@ export class TypographyComponent implements OnInit {
     if (this.supporterForm.valid) {
       const formData = new FormData();
       formData.append('name', this.supporterForm.value.namesup);
-      if (this.supporterForm.value.image) {
-        formData.append('image', this.supporterForm.value.image);
+      if (this.supporterForm.value.imageUrl) {
+        formData.append('imageUrl', this.supporterForm.value.imageUrl);
       }
 
       this.service.updateSupporter(id, formData).subscribe(

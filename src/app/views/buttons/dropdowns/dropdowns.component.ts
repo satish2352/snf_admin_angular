@@ -66,7 +66,7 @@ export class DropdownsComponent implements OnInit {
   addawards_recognation(): void {
     const formData = new FormData();
     formData.append('name', this.awards_recognation_Form.value.name);
-    formData.append('image', this.awards_recognation_Form.value.image);
+    formData.append('imageUrl', this.awards_recognation_Form.value.imageUrl);
 
     this.service.addawards_recognation(formData).subscribe(
       (response) => {
@@ -84,7 +84,7 @@ export class DropdownsComponent implements OnInit {
   updateawards_recognation(id: number): void {
     const formData = new FormData();
     formData.append('name', this.awards_recognation_Form.value.name);
-    formData.append('image', this.awards_recognation_Form.value.image);
+    formData.append('imageUrl', this.awards_recognation_Form.value.imageUrl);
 
     this.service.updateawards_recognation(id, formData).subscribe(
       (response) => {

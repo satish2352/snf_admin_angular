@@ -67,7 +67,7 @@ export class ButtonsComponent implements OnInit {
   addarticle_on_snf(): void {
     const formData = new FormData();
     formData.append('name', this.Project_Birthday_Celebrations_Form.value.name);
-    formData.append('image', this.Project_Birthday_Celebrations_Form.value.image);
+    formData.append('imageUrl', this.Project_Birthday_Celebrations_Form.value.imageUrl);
 
     this.service.addarticle_on_snf(formData).subscribe(
       (response) => {
@@ -85,7 +85,7 @@ export class ButtonsComponent implements OnInit {
   updatearticle_on_snf(id: number): void {
     const formData = new FormData();
     formData.append('name', this.Project_Birthday_Celebrations_Form.value.name);
-    formData.append('image', this.Project_Birthday_Celebrations_Form.value.image);
+    formData.append('imageUrl', this.Project_Birthday_Celebrations_Form.value.imageUrl);
 
     this.service.updatearticle_on_snf(id, formData).subscribe(
       (response) => {

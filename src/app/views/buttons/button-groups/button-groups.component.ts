@@ -67,7 +67,7 @@ export class ButtonGroupsComponent implements OnInit {
   addsnf_in_news_papers(): void {
     const formData = new FormData();
     formData.append('name', this.snf_in_news_papers_Form.value.name);
-    formData.append('image', this.snf_in_news_papers_Form.value.image);
+    formData.append('imageUrl', this.snf_in_news_papers_Form.value.imageUrl);
 
     this.service.addsnf_in_news_papers(formData).subscribe(
       (response) => {
@@ -85,7 +85,7 @@ export class ButtonGroupsComponent implements OnInit {
   updatesnf_in_news_papers(id: number): void {
     const formData = new FormData();
     formData.append('name', this.snf_in_news_papers_Form.value.name);
-    formData.append('image', this.snf_in_news_papers_Form.value.image);
+    formData.append('imageUrl', this.snf_in_news_papers_Form.value.imageUrl);
 
     this.service.updatesnf_in_news_papers(id, formData).subscribe(
       (response) => {

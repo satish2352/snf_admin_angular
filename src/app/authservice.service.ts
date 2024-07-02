@@ -45,7 +45,7 @@ import { BehaviorSubject,  Observable,  of, tap, throwError } from 'rxjs';
 })
 export class AuthserviceService {
   
-  public apiUrl = 'http://localhost:5000/auth/login'; ///live
+  public apiUrl = 'https://snf.backend.socialforumindia.com/auth/login'; ///live
   // private apiUrl = 'https://trainingapi.sumagotest.in/public/api/'; ////test
   // private apiUrl = 'http://trainingadmin.sumagotest.in/public/api/'; 
   

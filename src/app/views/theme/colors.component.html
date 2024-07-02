@@ -53,7 +53,8 @@
                 <td class="text-right">{{ item.name }}</td>
                 <td class="text-right">
                     <button class="btn btn-primary" (click)="toggleEditForm(item.id)">Edit</button>&nbsp;
-                    <button class="btn btn-danger" (click)="deleteCarrosalItem(item._id)">Delete</button>
+                    <button class="btn btn-danger" (click)="deleteCarrosalItem(item.id)">Delete</button>
+                    
                 </td>
             </tr>
         </tbody>
