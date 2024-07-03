@@ -344,8 +344,12 @@ export class ServiceService {
   updatesnf_in_news_papers(id: number, formData: FormData) {
     return this.http.put(`${this.snf_in_news_papersurl}/put/${id}`, formData);
   }
-  deletesnf_in_news_papers(id: number) {
-    return this.http.delete(`${this.snf_in_news_papersurl}/delete/${id}`)
+  // deletesnf_in_news_papers(id: number) {
+  //   return this.http.delete(`${this.snf_in_news_papersurl}/delete/${id}`)
+  // }
+  deletesnf_in_news_papers(id: number): Observable<string> {
+    const url = `${this.snf_in_news_papersurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
 

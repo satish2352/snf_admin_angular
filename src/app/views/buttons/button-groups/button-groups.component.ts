@@ -28,7 +28,7 @@ export class ButtonGroupsComponent implements OnInit {
   initializeForm(): void {
     this.snf_in_news_papers_Form = this.fb.group({
       name: ['', Validators.required],
-      image: [null]
+      imageUrl: [null]
     });
   }
 
@@ -41,11 +41,13 @@ export class ButtonGroupsComponent implements OnInit {
     );
   }
 
+ 
   onFileChange(event: any): void {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.snf_in_news_papers_Form.patchValue({ image: file });
+    const file = event.target.files[0];
+    this.snf_in_news_papers_Form.patchValue({
+      imageUrl: file // Store the file object in the form
+    });
   }
-
   toggleAddForm(): void {
     this.showAddForm = true;
     this.showEditForm = false;
@@ -62,42 +64,59 @@ export class ButtonGroupsComponent implements OnInit {
     this.snf_in_news_papers_Form.reset();
     this.snf_in_news_papers_Form.markAsUntouched();
     this.snf_in_news_papers_Form.markAsPristine();
+    this.selectedItem = { _id: '', name: '', imageUrl: '' }; 
   }
 
   addsnf_in_news_papers(): void {
-    const formData = new FormData();
-    formData.append('name', this.snf_in_news_papers_Form.value.name);
-    formData.append('imageUrl', this.snf_in_news_papers_Form.value.imageUrl);
-
-    this.service.addsnf_in_news_papers(formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchsnf_in_news_papers_Data();
-        this.showAddForm = false;
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
+    if (this.snf_in_news_papers_Form.valid) {
+      const formData = new FormData();
+      formData.append('name', this.snf_in_news_papers_Form.value.name);
+      const file = this.snf_in_news_papers_Form.value.imageUrl;
+   
+      if (!file) {
+        console.error('Image file is not selected');
+        return;
       }
-    );
+
+      formData.append('imageUrl', file);
+
+      this.service.addsnf_in_news_papers(formData).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchsnf_in_news_papers_Data();
+          this.toggleAddForm();
+          this.showAddForm = false;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   updatesnf_in_news_papers(id: number): void {
-    const formData = new FormData();
-    formData.append('name', this.snf_in_news_papers_Form.value.name);
-    formData.append('imageUrl', this.snf_in_news_papers_Form.value.imageUrl);
-
-    this.service.updatesnf_in_news_papers(id, formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchsnf_in_news_papers_Data();
-        this.showEditForm = false;
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
+    if (this.snf_in_news_papers_Form.valid) {
+      const formData = new FormData();
+      formData.append('name', this.snf_in_news_papers_Form.value.name);
+      const file = this.snf_in_news_papers_Form.value.imageUrl;
+  
+      // Check if an image file is selected
+      if (file instanceof File) {
+        formData.append('imageUrl', file);
       }
-    );
+  
+      this.service.updatesnf_in_news_papers(id, formData).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchsnf_in_news_papers_Data(); // Refresh data after update
+          this.showEditForm = false;
+          this.resetForm(); // Reset form after successful update
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   deletesnf_in_news_papers(id: number): void {
@@ -105,7 +124,8 @@ export class ButtonGroupsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchsnf_in_news_papers_Data();
-        location.reload();
+        this.snf_in_news_papers_Form.reset();
+        
       },
       (error) => {
         console.error(error);

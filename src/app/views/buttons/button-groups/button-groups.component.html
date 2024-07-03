@@ -54,7 +54,7 @@
                 <td class="text-right">{{ item.name }}</td>
                 <td class="text-right">
                     <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
-                    <button class="btn btn-danger" (click)="deletesnf_in_news_papers(item._id)">Delete</button>
+                    <button class="btn btn-danger" (click)="deletesnf_in_news_papers(item.id)">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -71,7 +71,7 @@
                     <div class="card-body">
                         <h2 class="card-title mb-4">Edit News Papers/Media</h2>
                         <form [formGroup]="snf_in_news_papers_Form"
-                            (ngSubmit)="updatesnf_in_news_papers(selectedItem._id)">
+                            (ngSubmit)="updatesnf_in_news_papers(selectedItem.id)">
                             <div class="mb-3">
                                 <label for="carrosalName" class="form-label">Name:</label>
                                 <input type="text" id="carrosalName" class="form-control" formControlName="name" />
