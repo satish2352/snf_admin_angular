@@ -184,8 +184,10 @@ export class ServiceService {
   updateNRI_Participants(id: number, formData: FormData) {
     return this.http.put(`${this.NRIParticipantsurl}/put/${id}`, formData);
   }
-  deleteNRI_Participants(id: number) {
-    return this.http.delete(`${this.NRIParticipantsurl}/delete/${id}`)
+ 
+  deleteNRI_Participants(id: number): Observable<string> {
+    const url = `${this.NRIParticipantsurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
 

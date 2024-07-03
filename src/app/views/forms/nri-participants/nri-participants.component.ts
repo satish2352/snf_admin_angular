@@ -54,6 +54,10 @@ export class NriParticipantsComponent {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.NriForm.patchValue({
+      name:item.name,
+      imageurl:item.imageUrl
+    })
   }
 
   resetForm(): void {
@@ -72,7 +76,7 @@ export class NriParticipantsComponent {
         console.log(response);
         this.fetchNriData();
         this.showAddForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -90,7 +94,7 @@ export class NriParticipantsComponent {
         console.log(response);
         this.fetchNriData();
         this.showEditForm = false;
-        location.reload();
+       //location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,7 +107,7 @@ export class NriParticipantsComponent {
       (response) => {
         console.log(response);
         this.fetchNriData();
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
