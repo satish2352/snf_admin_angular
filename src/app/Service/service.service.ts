@@ -29,12 +29,6 @@ export class ServiceService {
     return this.http.put(`${this.carrosalurl}/put/${id}`, formData);
   }
 
-  // deleteCarrosalItem(id: number) {
-  //   return this.http.delete(`${this.carrosalurl}/delete/${id}`)
-
-  // }
-  
-
   deleteCarrosalItem(id: number): Observable<string> {
     const url = `${this.carrosalurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
@@ -94,9 +88,7 @@ export class ServiceService {
   updateSupporter(id: number, formData: FormData) {
     return this.http.put(`${this.supporterurl}/put/${id}`, formData);
   }
-  // deleteSupporter(id: number) {
-  //   return this.http.delete(`${this.supporterurl}/delete/${id}`)
-  // }
+  
   deleteSupporter(id: number): Observable<string> {
     const url = `${this.supporterurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
@@ -116,8 +108,10 @@ export class ServiceService {
   updateHome_Media(id: number, formData: FormData) {
     return this.http.put(`${this.mediaurl}/put/${id}`, formData);
   }
-  deleteHome_Media(id: number) {
-    return this.http.delete(`${this.mediaurl}/delete/${id}`)
+ 
+  deleteHome_Media(id: number): Observable<string> {
+    const url = `${this.mediaurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   //Who we are -->Important_SNF_Project_para
@@ -169,8 +163,10 @@ export class ServiceService {
   updateMentors(id: number, formData: FormData) {
     return this.http.put(`${this.Mentorsurl}/put/${id}`, formData);
   }
-  deleteMentors(id: number) {
-    return this.http.delete(`${this.Mentorsurl}/delete/${id}`)
+  
+  deleteMentors(id: number): Observable<string> {
+    const url = `${this.Mentorsurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   // Who we are --> Team SNF NRI Participants
@@ -192,7 +188,7 @@ export class ServiceService {
 
 
   //Who we are --> Team SNF State Participants
-  private StateParticipantsurl = 'https://snf.backend.socialforumindia.com/State_Participants';
+  private StateParticipantsurl = 'https://snf.backend.socialforumindia.com/stateparticipant';
   getState_Participants() {
     return this.http.get(`${this.StateParticipantsurl}/get`)
   }
@@ -327,10 +323,7 @@ export class ServiceService {
   updatearticle_on_snf(id: number, formData: FormData) {
     return this.http.put(`${this.article_on_snfurl}/put/${id}`, formData);
   }
-  // deletearticle_on_snf(id: number) {
-  //   return this.http.delete(`${this.article_on_snfurl}/delete/${id}`)
-  // }
-
+ 
   deletearticle_on_snf(id: number): Observable<string> {
     const url = `${this.article_on_snfurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
@@ -346,9 +339,7 @@ export class ServiceService {
   updatesnf_in_news_papers(id: number, formData: FormData) {
     return this.http.put(`${this.snf_in_news_papersurl}/put/${id}`, formData);
   }
-  // deletesnf_in_news_papers(id: number) {
-  //   return this.http.delete(`${this.snf_in_news_papersurl}/delete/${id}`)
-  // }
+ 
   deletesnf_in_news_papers(id: number): Observable<string> {
     const url = `${this.snf_in_news_papersurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
@@ -366,9 +357,7 @@ export class ServiceService {
   updateawards_recognation(id: number, formData: FormData) {
     return this.http.put(`${this.awards_recognationurl}/put/${id}`, formData);
   }
-  // deleteawards_recognation(id: number) {
-  //   return this.http.delete(`${this.awards_recognationurl}/delete/${id}`)
-  // }
+ 
   deleteawards_recognation(id: number): Observable<string> {
     const url = `${this.awards_recognationurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });

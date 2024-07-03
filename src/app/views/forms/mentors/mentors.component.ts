@@ -54,6 +54,13 @@ export class MentorsComponent {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+
+    this.mentorForm.patchValue({
+      name:item.name,
+      imageUrl:item.imageUrl
+    })
+
+  
   }
 
   resetForm(): void {
@@ -72,7 +79,7 @@ export class MentorsComponent {
         console.log(response);
         this.fetchMentorData();
         this.showAddForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -90,7 +97,7 @@ export class MentorsComponent {
         console.log(response);
         this.fetchMentorData();
         this.showEditForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,7 +110,7 @@ export class MentorsComponent {
       (response) => {
         console.log(response);
         this.fetchMentorData();
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);

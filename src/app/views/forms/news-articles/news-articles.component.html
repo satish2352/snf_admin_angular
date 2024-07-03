@@ -53,7 +53,7 @@
                 <td class="text-right">{{ item.name }}</td>
                 <td class="text-right">
                     <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
-                    <button class="btn btn-danger" (click)="deletenewsItem(item._id)">Delete</button>
+                    <button class="btn btn-danger" (click)="deletenewsItem(item.id)">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -69,7 +69,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Edit Carrosal Image</h2>
-                        <form [formGroup]="newsForm" (ngSubmit)="updateNewsItem(selectedItem._id)">
+                        <form [formGroup]="newsForm" (ngSubmit)="updateNewsItem(selectedItem.id)">
                             <div class="mb-3">
                                 <label for="newsName" class="form-label">Name:</label>
                                 <input type="text" id="newsName" class="form-control" formControlName="name" />

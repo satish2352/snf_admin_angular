@@ -54,7 +54,13 @@ export class NewsArticlesComponent implements OnInit{
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+
+    this.newsForm.patchValue({
+      name: item.name,
+       imageUrl: item.imageUrl // Assuming you handle the image display separately
+    });
   }
+
 
   resetForm(): void {
     this.newsForm.reset();
@@ -72,7 +78,7 @@ export class NewsArticlesComponent implements OnInit{
         console.log(response);
         this.fetchNewsData();
         this.showAddForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -90,7 +96,7 @@ export class NewsArticlesComponent implements OnInit{
         console.log(response);
         this.fetchNewsData();
         this.showEditForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,7 +109,7 @@ export class NewsArticlesComponent implements OnInit{
       (response) => {
         console.log(response);
         this.fetchNewsData();
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
