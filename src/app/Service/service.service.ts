@@ -148,8 +148,10 @@ export class ServiceService {
   updateFounderParticipant(id: number, formData: FormData) {
     return this.http.put(`${this.founderparticipateurl}/put/${id}`, formData);
   }
-  deleteFounderParticipant(id: number) {
-    return this.http.delete(`${this.founderparticipateurl}/delete/${id}`)
+  
+  deleteFounderParticipant(id: number): Observable<string> {
+    const url = `${this.founderparticipateurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   //Who we are --> Team SNF Mentors

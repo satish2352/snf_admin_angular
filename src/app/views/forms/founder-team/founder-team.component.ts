@@ -54,6 +54,10 @@ export class FounderTeamComponent {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.FounderForm.patchValue({
+      name:item.name,
+      imageurl:item.imageUrl
+    })
   }
 
   resetForm(): void {
@@ -72,7 +76,7 @@ export class FounderTeamComponent {
         console.log(response);
         this.fetchFounderData();
         this.showAddForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -90,7 +94,7 @@ export class FounderTeamComponent {
         console.log(response);
         this.fetchFounderData();
         this.showEditForm = false;
-        location.reload();
+       // location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,7 +107,7 @@ export class FounderTeamComponent {
       (response) => {
         console.log(response);
         this.fetchFounderData();
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);

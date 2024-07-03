@@ -10,7 +10,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 export class AccordionsComponent implements OnInit {
   Home_4_Cards_Form: FormGroup | any;
   Home_4_Cards_Data: any;
-  selectedItem: any = { _id: '', name4: '', para4: '', imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', para: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
 
@@ -26,9 +26,9 @@ export class AccordionsComponent implements OnInit {
 
   initializeForm(): void {
     this.Home_4_Cards_Form = this.fb.group({
-      name4: ['', Validators.required],
-      para4: ['', Validators.required],
-      image: [null]
+      name: ['', Validators.required],
+      para: ['', Validators.required],
+      imageUrl: [null]
     });
   }
 
@@ -46,7 +46,7 @@ export class AccordionsComponent implements OnInit {
 
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.Home_4_Cards_Form.patchValue({ image: file });
+    this.Home_4_Cards_Form.patchValue({ imageUrl: file });
   }
 
   toggleAddForm(): void {
@@ -59,6 +59,12 @@ export class AccordionsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+
+    this.Home_4_Cards_Form.patchValue({
+      name: item.name,
+      para: item.para,
+      imageUrl: item.imageUrl // Assuming you handle the image display separately
+    });
   }
 
   resetForm(): void {
@@ -70,15 +76,16 @@ export class AccordionsComponent implements OnInit {
   add_Home_4_Cards(event: Event): void {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('name4', this.Home_4_Cards_Form.value.name4);
-    formData.append('para4', this.Home_4_Cards_Form.value.para4);
-    formData.append('image', this.Home_4_Cards_Form.value.image);
+    formData.append('name', this.Home_4_Cards_Form.value.name);
+    formData.append('para', this.Home_4_Cards_Form.value.para);
+    formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
 
     this.service.add_Home_4_Cards(formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchHome_4_Cards_Data();
         this.showAddForm = false;
+        
       },
       (error) => {
         console.error(error);
@@ -89,9 +96,11 @@ export class AccordionsComponent implements OnInit {
   update_Home_4_Cards(id: number, event: Event): void {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('name4', this.Home_4_Cards_Form.value.name4);
-    formData.append('para4', this.Home_4_Cards_Form.value.para4);
-    formData.append('image', this.Home_4_Cards_Form.value.image);
+    formData.append('name', this.Home_4_Cards_Form.value.name);
+    formData.append('para', this.Home_4_Cards_Form.value.para);
+    if (this.Home_4_Cards_Form.value.imageUrl) {
+      formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
+    }
 
     this.service.update_Home_4_Cards(id, formData).subscribe(
       (response) => {

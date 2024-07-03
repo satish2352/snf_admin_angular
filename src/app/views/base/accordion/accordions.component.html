@@ -8,11 +8,11 @@
             <form [formGroup]="Home_4_Cards_Form" (submit)="add_Home_4_Cards($event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Title</label>
-                <input type="text" id="carrosalName" class="form-control" formControlName="name4" />
+                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
               </div>
               <div class="mb-3">
                 <label for="carrosalPara" class="form-label">Paragraph</label>
-                <input type="text" id="carrosalPara" class="form-control" formControlName="para4" />
+                <input type="text" id="carrosalPara" class="form-control" formControlName="para" />
               </div>
               <div class="mb-3">
                 <label for="carrosalImage" class="form-label">Image:</label>
@@ -54,11 +54,11 @@
             <img [src]="item.imageUrl" alt="image"
               style="max-height: 150px; max-width: 200px; float: left; margin-right: 10px;" />
           </td>
-          <td class="text-right">{{ item.name4 }}</td>
-          <td class="text-right">{{ item.para4 }}</td>
+          <td class="text-right">{{ item.name }}</td>
+          <td class="text-right">{{ item.para}}</td>
           <td style="width: 150px;" class="text-right">
             <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
-            <button class="btn btn-danger" (click)="delete_Home_4_Cards(item._id)">Delete</button>
+            <button class="btn btn-danger" (click)="delete_Home_4_Cards(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -74,14 +74,14 @@
         <div class="card">
           <div class="card-body">
             <h2 class="card-title mb-4">Edit Cart</h2>
-            <form [formGroup]="Home_4_Cards_Form" (submit)="update_Home_4_Cards(selectedItem._id, $event)">
+            <form [formGroup]="Home_4_Cards_Form" (submit)="update_Home_4_Cards(selectedItem.id, $event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Title:</label>
-                <input type="text" id="carrosalName" class="form-control" formControlName="name4" />
+                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
               </div>
               <div class="mb-3">
                 <label for="carrosalPara" class="form-label">Paragraph:</label>
-                <input type="text" id="carrosalPara" class="form-control" formControlName="para4" />
+                <input type="text" id="carrosalPara" class="form-control" formControlName="para" />
               </div>
               <div class="mb-3">
                 <label for="carrosalImage" class="form-label">Image:</label>
@@ -95,3 +95,12 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
