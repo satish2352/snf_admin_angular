@@ -94,8 +94,12 @@ export class ServiceService {
   updateSupporter(id: number, formData: FormData) {
     return this.http.put(`${this.supporterurl}/put/${id}`, formData);
   }
-  deleteSupporter(id: number) {
-    return this.http.delete(`${this.supporterurl}/delete/${id}`)
+  // deleteSupporter(id: number) {
+  //   return this.http.delete(`${this.supporterurl}/delete/${id}`)
+  // }
+  deleteSupporter(id: number): Observable<string> {
+    const url = `${this.supporterurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   //home media

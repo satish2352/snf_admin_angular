@@ -7,9 +7,8 @@
 
     <hr>
 
-     <!-- Displaying items -->
-    <div class="container" *ngIf="!showAddForm && !selectedItem._id">
-       
+    <!-- Displaying items -->
+    <div class="container" *ngIf="!showAddForm && !selectedItem.id">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -25,26 +24,24 @@
                     </td>
                     <td>
                         <button class="btn btn-primary" (click)="onSelect(item)">Edit</button> &nbsp;
-                        <button class="btn btn-danger" (click)="deleteSupporter(item._id)">Delete</button>
+                        <button class="btn btn-danger" (click)="deleteSupporter(item.id)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Adding a new item form -->
-    <div class="container mb-3" *ngIf="showAddForm || selectedItem._id">
+    <!-- Adding or editing item form -->
+    <div class="container mb-3" *ngIf="showAddForm || selectedItem.id">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title">{{ selectedItem._id ? 'Edit Supporters Image' : 'Add Supporters Image' }}
-                        </h2>
-                        <form [formGroup]="supporterForm"
-                            (ngSubmit)="selectedItem._id ? updateSupporter(selectedItem._id) : addSupporter()">
+                        <h2 class="card-title">{{ selectedItem.id ? 'Edit Supporters Image' : 'Add Supporters Image' }}</h2>
+                        <form [formGroup]="supporterForm" (ngSubmit)="selectedItem.id ? updateSupporter(selectedItem.id) : addSupporter()">
                             <div class="mb-3">
-                                <label for="namesup" class="form-label">Name:</label>
-                                <input type="text" id="namesup" class="form-control" formControlName="namesup" />
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" id="name" class="form-control" formControlName="name" />
                             </div>
 
                             <div class="mb-3">
@@ -52,8 +49,7 @@
                                 <input type="file" id="image" class="form-control" (change)="onFileChange($event)" />
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ selectedItem._id ? 'Update' : 'Submit'
-                                }}</button>
+                            <button type="submit" class="btn btn-primary">{{ selectedItem.id ? 'Update' : 'Submit' }}</button>
                         </form>
                     </div>
                 </div>
