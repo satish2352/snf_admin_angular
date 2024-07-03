@@ -27,7 +27,7 @@ export class DropdownsComponent implements OnInit {
   initializeForm(): void {
     this.awards_recognation_Form = this.fb.group({
       name: ['', Validators.required],
-      image: [null]
+      imageUrl: [null]
     });
   }
 
@@ -41,8 +41,10 @@ export class DropdownsComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.awards_recognation_Form.patchValue({ image: file });
+    const file = event.target.files[0];
+    this.awards_recognation_Form.patchValue({
+      imageUrl: file // Store the file object in the form
+    });
   }
 
   toggleAddForm(): void {
@@ -55,48 +57,71 @@ export class DropdownsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.awards_recognation_Form.patchValue({
+     name:item.name,
+     imageUrl:item.imageUrl
+
+});
+
   }
 
   resetForm(): void {
     this.awards_recognation_Form.reset();
     this.awards_recognation_Form.markAsUntouched();
     this.awards_recognation_Form.markAsPristine();
+    this.selectedItem = { _id: '', name: '', imageUrl: '' }; 
   }
 
   addawards_recognation(): void {
-    const formData = new FormData();
-    formData.append('name', this.awards_recognation_Form.value.name);
-    formData.append('imageUrl', this.awards_recognation_Form.value.imageUrl);
-
-    this.service.addawards_recognation(formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchawards_recognation_Data();
-        this.showAddForm = false;
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
+    if (this.awards_recognation_Form.valid) {
+      const formData = new FormData();
+      formData.append('name', this.awards_recognation_Form.value.name);
+      const file = this.awards_recognation_Form.value.imageUrl;
+   
+      if (!file) {
+        console.error('Image file is not selected');
+        return;
       }
-    );
-  }
+
+      formData.append('imageUrl', file);
+
+      this.service.addawards_recognation(formData).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchawards_recognation_Data();
+          this.toggleAddForm();
+          this.showAddForm = false;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
+  } 
 
   updateawards_recognation(id: number): void {
-    const formData = new FormData();
-    formData.append('name', this.awards_recognation_Form.value.name);
-    formData.append('imageUrl', this.awards_recognation_Form.value.imageUrl);
-
-    this.service.updateawards_recognation(id, formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchawards_recognation_Data();
-        this.showEditForm = false;
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
+    if (this.awards_recognation_Form.valid) {
+      const formData = new FormData();
+      formData.append('name', this.awards_recognation_Form.value.name);
+      const file = this.awards_recognation_Form.value.imageUrl;
+  
+      // Check if an image file is selected
+      if (file instanceof File) {
+        formData.append('imageUrl', file);
       }
-    );
+  
+      this.service.updateawards_recognation(id, formData).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchawards_recognation_Data(); // Refresh data after update
+          this.showEditForm = false;
+          this.resetForm(); // Reset form after successful update
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   deleteawards_recognation(id: number): void {
@@ -104,7 +129,10 @@ export class DropdownsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchawards_recognation_Data();
-        location.reload();
+        this.selectedItem = { _id: '', name: '', imageUrl: '' };
+        this.awards_recognation_Form.reset();
+        this.showAddForm = false;
+        //location.reload();
       },
       (error) => {
         console.error(error);

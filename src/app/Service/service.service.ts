@@ -364,8 +364,11 @@ export class ServiceService {
   updateawards_recognation(id: number, formData: FormData) {
     return this.http.put(`${this.awards_recognationurl}/put/${id}`, formData);
   }
-  deleteawards_recognation(id: number) {
-    return this.http.delete(`${this.awards_recognationurl}/delete/${id}`)
+  // deleteawards_recognation(id: number) {
+  //   return this.http.delete(`${this.awards_recognationurl}/delete/${id}`)
+  // }
+  deleteawards_recognation(id: number): Observable<string> {
+    const url = `${this.awards_recognationurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
-
 }
