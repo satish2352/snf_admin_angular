@@ -325,10 +325,14 @@ export class ServiceService {
   updatearticle_on_snf(id: number, formData: FormData) {
     return this.http.put(`${this.article_on_snfurl}/put/${id}`, formData);
   }
-  deletearticle_on_snf(id: number) {
-    return this.http.delete(`${this.article_on_snfurl}/delete/${id}`)
-  }
+  // deletearticle_on_snf(id: number) {
+  //   return this.http.delete(`${this.article_on_snfurl}/delete/${id}`)
+  // }
 
+  deletearticle_on_snf(id: number): Observable<string> {
+    const url = `${this.article_on_snfurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
   //  Media/Awards -->  snf_in_news_papers
   private snf_in_news_papersurl = 'https://snf.backend.socialforumindia.com/homemedia';
   getsnf_in_news_papers() {

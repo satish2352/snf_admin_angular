@@ -55,7 +55,7 @@
                 <td class="text-right">
                     <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
                     <button class="btn btn-danger"
-                        (click)="deletearticle_on_snf(item._id)">Delete</button>
+                        (click)="deletearticle_on_snf(item.id)">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -72,7 +72,7 @@
                     <div class="card-body">
                         <h2 class="card-title mb-4">Edit Articles on SNF </h2>
                         <form [formGroup]="Project_Birthday_Celebrations_Form"
-                            (ngSubmit)="updatearticle_on_snf(selectedItem._id)">
+                            (ngSubmit)="updatearticle_on_snf(selectedItem.id)">
                             <div class="mb-3">
                                 <label for="carrosalName" class="form-label">Name:</label>
                                 <input type="text" id="carrosalName" class="form-control" formControlName="name" />
