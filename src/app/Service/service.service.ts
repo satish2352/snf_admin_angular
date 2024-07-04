@@ -200,10 +200,13 @@ export class ServiceService {
   updateState_Participants(id: number, formData: FormData) {
     return this.http.put(`${this.StateParticipantsurl}/put/${id}`, formData);
   }
-  deleteState_Participants(id: number) {
-    return this.http.delete(`${this.StateParticipantsurl}/delete/${id}`)
+  // deleteState_Participants(id: number) {
+  //   return this.http.delete(`${this.StateParticipantsurl}/delete/${id}`)
+  // }
+  deleteState_Participants(id: number): Observable<string> {
+    const url = `${this.StateParticipantsurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
-
 
   //Who we do --> OnGoingProject_Clean_Water_Project
   private OnGoingProject_Clean_Water_Projecturl = 'https://snf.backend.socialforumindia.com/OnGoingProject_Clean_Water_Project';

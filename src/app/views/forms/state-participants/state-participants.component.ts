@@ -54,6 +54,10 @@ export class StateParticipantsComponent {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.StateForm.patchValue({
+   name:item.name,
+   imageUrl:item.imageUrl
+    });
   }
 
   resetForm(): void {
@@ -72,13 +76,14 @@ export class StateParticipantsComponent {
         console.log(response);
         this.fetchStateData();
         this.showAddForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
       }
     );
   }
+  
 
   updateStateItem(id: number): void {
     const formData = new FormData();
@@ -90,7 +95,7 @@ export class StateParticipantsComponent {
         console.log(response);
         this.fetchStateData();
         this.showEditForm = false;
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,7 +108,7 @@ export class StateParticipantsComponent {
       (response) => {
         console.log(response);
         this.fetchStateData();
-        location.reload();
+        //location.reload();
       },
       (error) => {
         console.error(error);
