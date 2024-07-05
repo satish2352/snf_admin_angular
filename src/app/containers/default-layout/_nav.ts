@@ -18,13 +18,13 @@ export const navItems: INavData[] = [
   },
   {
     // name: 'Colors',
-    name: 'Carousel',
+    name: 'Slider',
     url: '/theme/colors',
     iconComponent: { name: 'cil-drop' }
   },
   {
     // name: 'Typography',
-    name: 'Supporters',
+    name: 'Our Client',
     url: '/theme/typography',
     linkProps: { fragment: 'someAnchor' },
     iconComponent: { name: 'cil-star' }
@@ -42,7 +42,7 @@ export const navItems: INavData[] = [
     children: [
       {
         // name: 'Accordion',
-        name: '4-Cards',
+        name: 'testimonial',
         url: '/base/accordion'
       },
       {
@@ -125,7 +125,7 @@ export const navItems: INavData[] = [
       },
       {
         // name: 'Button groups',
-        name: 'News Papers',
+        name: 'Home Page Articles',
         url: '/buttons/button-groups'
       },
       {
@@ -288,19 +288,19 @@ export const navItems: INavData[] = [
     name: 'Links',
     class: 'py-0'
   },
-  {
-    name: 'Live Project',
-    url: 'https://www.socialforumindia.com/cmplpro.php',
-    iconComponent: { name: 'cil-description' },
-    attributes: { target: '_blank', class: '-text-dark' },
-    class: 'mt-auto'
-  },
-  {
-    name: 'SNF Website',
-    url: 'https://www.socialforumindia.com/',
-    iconComponent: { name: 'cil-layers' },
-    attributes: { target: '_blank' }
-  },
+  // {
+  //   name: 'Live Project',
+  //   url: 'https://www.socialforumindia.com/cmplpro.php',
+  //   iconComponent: { name: 'cil-description' },
+  //   attributes: { target: '_blank', class: '-text-dark' },
+  //   class: 'mt-auto'
+  // },
+  // {
+  //   name: 'SNF Website',
+  //   url: 'https://www.socialforumindia.com/',
+  //   iconComponent: { name: 'cil-layers' },
+  //   attributes: { target: '_blank' }
+  // },
   //LogOut
   {
     name: 'Logout',
