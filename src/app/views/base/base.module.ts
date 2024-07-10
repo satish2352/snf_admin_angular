@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 
 // CoreUI Modules
 import {
@@ -49,7 +49,7 @@ import { SpinnersComponent } from './spinners/spinners.component';
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { TabsComponent } from './tabs/tabs.component';
-
+import {ProjectComponent} from './projectcategory/projectcategory.component'
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
 
@@ -83,6 +83,8 @@ import { BaseRoutingModule } from './base-routing.module';
     PopoverModule,
     TableModule,
     DocsComponentsModule,
+    FormsModule
+    
   ],
   declarations: [
     AccordionsComponent,
@@ -100,6 +102,7 @@ import { BaseRoutingModule } from './base-routing.module';
     TooltipsComponent,
     TabsComponent,
     PlaceholdersComponent,
+    ProjectComponent
   ],
 })
 export class BaseModule {}

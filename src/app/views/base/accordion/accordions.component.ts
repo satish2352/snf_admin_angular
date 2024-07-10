@@ -10,7 +10,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 export class AccordionsComponent implements OnInit {
   Home_4_Cards_Form: FormGroup | any;
   Home_4_Cards_Data: any;
-  selectedItem: any = { _id: '', name: '', para: '', imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', para: '', city:'',imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
 
@@ -28,6 +28,7 @@ export class AccordionsComponent implements OnInit {
     this.Home_4_Cards_Form = this.fb.group({
       name: ['', Validators.required],
       para: ['', Validators.required],
+      city: ['', Validators.required],
       imageUrl: [null]
     });
   }
@@ -63,6 +64,7 @@ export class AccordionsComponent implements OnInit {
     this.Home_4_Cards_Form.patchValue({
       name: item.name,
       para: item.para,
+      city: item.city,
       imageUrl: item.imageUrl // Assuming you handle the image display separately
     });
   }
@@ -78,6 +80,7 @@ export class AccordionsComponent implements OnInit {
     const formData = new FormData();
     formData.append('name', this.Home_4_Cards_Form.value.name);
     formData.append('para', this.Home_4_Cards_Form.value.para);
+    formData.append('city', this.Home_4_Cards_Form.value.city);
     formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
 
     this.service.add_Home_4_Cards(formData).subscribe(
@@ -98,6 +101,7 @@ export class AccordionsComponent implements OnInit {
     const formData = new FormData();
     formData.append('name', this.Home_4_Cards_Form.value.name);
     formData.append('para', this.Home_4_Cards_Form.value.para);
+    formData.append('city', this.Home_4_Cards_Form.value.city);
     if (this.Home_4_Cards_Form.value.imageUrl) {
       formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
     }

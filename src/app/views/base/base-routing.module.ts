@@ -17,7 +17,7 @@ import { TooltipsComponent } from './tooltips/tooltips.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { PlaceholdersComponent } from './placeholders/placeholders.component';
 import { DefaultLayoutComponent } from 'src/app/containers/default-layout/default-layout.component';
-
+import { ProjectComponent } from './projectcategory/projectcategory.component';
 const routes: Routes = [
   {path:'',component:DefaultLayoutComponent,
  
@@ -102,6 +102,13 @@ const routes: Routes = [
         component: ProgressComponent,
         data: {
           title: 'Progress',
+        },
+      },
+      {
+        path: 'project',
+        component: ProjectComponent,
+        data: {
+          title: 'project',
         },
       },
       {

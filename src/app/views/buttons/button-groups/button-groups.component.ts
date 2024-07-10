@@ -58,6 +58,11 @@ export class ButtonGroupsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+
+    this.snf_in_news_papers_Form.patchValue({
+      name: item.name,
+      imageurl :item.imageUrl
+    });
   }
 
   resetForm(): void {

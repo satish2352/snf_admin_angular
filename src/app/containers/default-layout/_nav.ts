@@ -42,7 +42,7 @@ export const navItems: INavData[] = [
     children: [
       {
         // name: 'Accordion',
-        name: 'testimonial',
+        name: 'Testimonial',
         url: '/base/accordion'
       },
       {
@@ -50,66 +50,57 @@ export const navItems: INavData[] = [
         name: '2-Cards',
         url: '/base/breadcrumbs'
       },
+      // {
+      //   // name: 'Cards',
+      //   name: 'Imp Project Carrired By SNF',
+      //   url: '/base/cards'
+      // },
+      // {
+      //   // name: 'Carousel',
+      //   name: 'Clean Water Projects',
+      //   url: '/base/carousel'
+      // },
+      // {
+      //   // name: 'Collapse',
+      //   name: 'Shahid Jawan Fund',
+      //   url: '/base/collapse'
+      // },
+      // {
+      //   // name: 'List Group',
+      //   name: 'Educational Facilities',
+      //   url: '/base/list-group'
+      // },
+      // {
+      //   // name: 'Navs & Tabs',
+      //   name: 'Health & Medical Projects',
+      //   url: '/base/navs'
+      // },
+      // {
+      //   //   name: 'Pagination',
+      //   name: 'Environmental Conservation',
+      //   url: '/base/pagination'
+      // },
+      // {
+      //   // name: 'Placeholder',
+      //   name: 'Sport Projects',
+      //   url: '/base/placeholder'
+      // },
+      // {
+      //   //   name: 'Popovers',
+      //   name: 'Birthday Celebrations',
+      //   url: '/base/popovers'
+      // },
+     
       {
-        // name: 'Cards',
-        name: 'Imp Project Carrired By SNF',
-        url: '/base/cards'
-      },
-      {
-        // name: 'Carousel',
-        name: 'Clean Water Projects',
+        //   name: 'Popovers',
+        name: 'Upcoming Project',
         url: '/base/carousel'
       },
       {
-        // name: 'Collapse',
-        name: 'Shahid Jawan Fund',
-        url: '/base/collapse'
+        //name;'projectcategory'
+        name:'Add project Category',
+        url:'/base/project'
       },
-      {
-        // name: 'List Group',
-        name: 'Educational Facilities',
-        url: '/base/list-group'
-      },
-      {
-        // name: 'Navs & Tabs',
-        name: 'Health & Medical Projects',
-        url: '/base/navs'
-      },
-      {
-        //   name: 'Pagination',
-        name: 'Environmental Conservation',
-        url: '/base/pagination'
-      },
-      {
-        // name: 'Placeholder',
-        name: 'Sport Projects',
-        url: '/base/placeholder'
-      },
-      {
-        //   name: 'Popovers',
-        name: 'Birthday Celebrations',
-        url: '/base/popovers'
-      },
-      // {
-      //   name: 'Progress',
-      //   url: '/base/progress'
-      // },
-      // {
-      //   name: 'Spinners',
-      //   url: '/base/spinners'
-      // },
-      // {
-      //   name: 'Tables',
-      //   url: '/base/tables'
-      // },
-      // {
-      //   name: 'Tabs',
-      //   url: '/base/tabs'
-      // },
-      // {
-      //   name: 'Tooltips',
-      //   url: '/base/tooltips'
-      // }
     ]
   },
   {

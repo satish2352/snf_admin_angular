@@ -52,11 +52,16 @@ export class ColorsComponent implements OnInit {
     this.resetForm();
   }
 
-  toggleEditForm(id: any): void {
-    this.selectedItem = id;
+  toggleEditForm(item: any): void {
+    this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.carrosalForm.patchValue({
+      name: item.name,
+      imageUrl: item.imageUrl
+    })
   }
+ 
 
   resetForm(): void {
     this.carrosalForm.reset();
@@ -99,6 +104,7 @@ export class ColorsComponent implements OnInit {
   }
 
   updateCarrosalItem(id: number): void {
+    debugger
     const formData = new FormData();
     const nameControl = this.carrosalForm.get('name');
     const imageControl = this.carrosalForm.get('image');
@@ -113,6 +119,7 @@ export class ColorsComponent implements OnInit {
     }
 
     this.service.updateCarrosalItem(id, formData).subscribe(
+      
       (response) => {
         console.log(response);
         this.fetchCarrosalData();

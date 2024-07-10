@@ -8,8 +8,8 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./buttons.component.scss']
 })
 export class ButtonsComponent implements OnInit {
-  Project_Birthday_Celebrations_Form!: FormGroup;
-  Project_Birthday_Celebrations_Data: any;
+  Newsartical_Form!: FormGroup;
+  Newsartical_Form_Data: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
@@ -21,12 +21,12 @@ export class ButtonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    this.fetchProject_Birthday_Celebrations_Data();
+    this.fetchNewsartical_Form_Data();
   }
 
  
   initializeForm(): void {
-    this.Project_Birthday_Celebrations_Form = this.fb.group({
+    this.Newsartical_Form = this.fb.group({
       name: ['', Validators.required],
       imageUrl: [null] // Initialize imageUrl as null
     });
@@ -34,11 +34,11 @@ export class ButtonsComponent implements OnInit {
 
 
   
-  fetchProject_Birthday_Celebrations_Data() {
+  fetchNewsartical_Form_Data() {
     this.service.getarticle_on_snf().subscribe(
       (response) => {
         console.log(response);
-        this.Project_Birthday_Celebrations_Data = response;
+        this.Newsartical_Form_Data = response;
       },
       (error) => {
         console.error(error);
@@ -48,7 +48,7 @@ export class ButtonsComponent implements OnInit {
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
-    this.Project_Birthday_Celebrations_Form.patchValue({
+    this.Newsartical_Form.patchValue({
       imageUrl: file // Store the file object in the form
     });
   }
@@ -63,20 +63,26 @@ export class ButtonsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
+    this.Newsartical_Form.patchValue({
+      name: item.name,
+      imageurl :item.imageUrl
+    });
   }
+ 
+
 
   resetForm(): void {
-    this.Project_Birthday_Celebrations_Form.reset();
-    this.Project_Birthday_Celebrations_Form.markAsUntouched();
-    this.Project_Birthday_Celebrations_Form.markAsPristine();
+    this.Newsartical_Form.reset();
+    this.Newsartical_Form.markAsUntouched();
+    this.Newsartical_Form.markAsPristine();
     this.selectedItem = { _id: '', name: '', imageUrl: '' }; 
   }
 
   addarticle_on_snf(): void {
-    if (this.Project_Birthday_Celebrations_Form.valid) {
+    if (this.Newsartical_Form.valid) {
       const formData = new FormData();
-      formData.append('name', this.Project_Birthday_Celebrations_Form.value.name);
-      const file = this.Project_Birthday_Celebrations_Form.value.imageUrl;
+      formData.append('name', this.Newsartical_Form.value.name);
+      const file = this.Newsartical_Form.value.imageUrl;
    
       if (!file) {
         console.error('Image file is not selected');
@@ -88,7 +94,7 @@ export class ButtonsComponent implements OnInit {
       this.service.addarticle_on_snf(formData).subscribe(
         (response) => {
           console.log(response);
-          this.fetchProject_Birthday_Celebrations_Data();
+          this.fetchNewsartical_Form_Data();
           this.toggleAddForm();
           this.showAddForm = false;
         },
@@ -100,10 +106,10 @@ export class ButtonsComponent implements OnInit {
   }
 
   updatearticle_on_snf(id: number): void {
-    if (this.Project_Birthday_Celebrations_Form.valid) {
+    if (this.Newsartical_Form.valid) {
       const formData = new FormData();
-      formData.append('name', this.Project_Birthday_Celebrations_Form.value.name);
-      const file = this.Project_Birthday_Celebrations_Form.value.imageUrl;
+      formData.append('name', this.Newsartical_Form.value.name);
+      const file = this.Newsartical_Form.value.imageUrl;
   
       // Check if an image file is selected
       if (file instanceof File) {
@@ -113,7 +119,7 @@ export class ButtonsComponent implements OnInit {
       this.service.updatearticle_on_snf(id, formData).subscribe(
         (response) => {
           console.log(response);
-          this.fetchProject_Birthday_Celebrations_Data(); // Refresh data after update
+          this.fetchNewsartical_Form_Data(); // Refresh data after update
           this.showEditForm = false;
           this.resetForm(); // Reset form after successful update
         },
@@ -138,11 +144,11 @@ export class ButtonsComponent implements OnInit {
         console.log('article deleted successfully');
   
         
-        this.Project_Birthday_Celebrations_Data = this.Project_Birthday_Celebrations_Data.filter((item: any) => item.id !== id);
+        this.Newsartical_Form_Data = this.Newsartical_Form_Data.filter((item: any) => item.id !== id);
   
         
         this.selectedItem = { _id: '', name: '', imageUrl: '' };
-        this.Project_Birthday_Celebrations_Form.reset();
+        this.Newsartical_Form.reset();
         this.showAddForm = false;
       },
       (error) => {

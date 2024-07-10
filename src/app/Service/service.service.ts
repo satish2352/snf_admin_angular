@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -71,9 +71,13 @@ export class ServiceService {
     return this.http.put(`${this.Home_4_Cardsurl}/put/${id}`, formData);
   }
 
-  delete_Home_4_Cards(id: number) {
-    return this.http.delete(`${this.Home_4_Cardsurl}/delete/${id}`)
+  // delete_Home_4_Cards(id: number) {
+  //   return this.http.delete(`${this.Home_4_Cardsurl}/delete/${id}`)
 
+  // }
+  delete_Home_4_Cards(id: number): Observable<string> {
+    const url = `${this.Home_4_Cardsurl}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   // Home supporter image API 
@@ -367,4 +371,52 @@ export class ServiceService {
     const url = `${this.awards_recognationurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
   }
+//  Upcoming project 
+  // Home Home_2_Cards image API 
+  private upcoming_url = 'https://snf.backend.socialforumindia.com/upcomingeventsRoute';
+
+  addupcomingproject(formdata: any) {
+    return this.http.post(`${this.upcoming_url}/post`, formdata);
+  }
+
+  getupcomingproject() {
+    return this.http.get(`${this.upcoming_url}/get`)
+  }
+
+  updateupcomingproject(id: number, formData: any) {
+    return this.http.put(`${this.upcoming_url}/put/${id}`, formData);
+  }
+
+  // deleteupcomingproject(id: number) {
+  //   return this.http.delete(`${this.upcoming_url}/delete/${id}`)
+
+  // }
+  deleteupcomingproject(id: number): Observable<string> {
+    const url = `${this.upcoming_url}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  //Add Project catgory
+  // Home Home_2_Cards image API 
+  private projectcategory_url = 'https://snf.backend.socialforumindia.com/upcomingeventstitleRoute';
+
+  addProject(projectData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${this.projectcategory_url}/post`, JSON.stringify(projectData), { headers });
+  }
+
+  updateProject(id: number, projectData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(`${this.projectcategory_url}/put/${id}`, JSON.stringify(projectData), { headers });
+  }
+
+  deleteProject(id: number): Observable<any> {
+    const url = `${this.projectcategory_url}/delete/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
+
+  getProject(): Observable<any> {
+    return this.http.get(`${this.projectcategory_url}/get`);
+  }
+  
 }

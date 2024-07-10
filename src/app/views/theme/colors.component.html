@@ -12,10 +12,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="carrosalImage" class="form-label">Image:</label>
-                                <input type="file" id="carrosalImage" class="form-control"
-                                    (change)="onFileChange($event)" />
+                                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
                             </div>
-                            <button class="btn btn-primary  mt-3" type="submit">Submit</button>
+                            <button class="btn btn-primary mt-3" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -23,8 +22,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="text-center" *ngIf="!showAddForm && !showEditForm">
     <div class="container">
@@ -39,28 +36,26 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th>Sr. No</th>
                 <th>Image</th>
                 <th class="text-right">Image Name</th>
                 <th class="text-right">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of carrosalData">
+            <tr *ngFor="let item of carrosalData; let i = index">
+                <td>{{ i + 1 }}</td>
                 <td>
-                    <img [src]="item.imageUrl" alt="image"
-                        style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
+                    <img [src]="item.imageUrl" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
                 </td>
                 <td class="text-right">{{ item.name }}</td>
                 <td class="text-right">
                     <button class="btn btn-primary" (click)="toggleEditForm(item.id)">Edit</button>&nbsp;
                     <button class="btn btn-danger" (click)="deleteCarrosalItem(item.id)">Delete</button>
-                    
                 </td>
             </tr>
         </tbody>
     </table>
-
-
 </div>
 
 <div *ngIf="showEditForm">
@@ -77,8 +72,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="carrosalImage" class="form-label">Image:</label>
-                                <input type="file" id="carrosalImage" class="form-control"
-                                    (change)="onFileChange($event)" />
+                                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
                             </div>
                             <button class="btn btn-primary mt-3" type="submit">Update</button>
                         </form>

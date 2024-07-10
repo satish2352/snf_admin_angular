@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Add Articles on SNF </h2>
-                        <form [formGroup]="Project_Birthday_Celebrations_Form"
+                        <form [formGroup]="Newsartical_Form"
                             (ngSubmit)="addarticle_on_snf()">
                             <div class="mb-3">
                                 <label for="carrosalName" class="form-label">Name:</label>
@@ -40,13 +40,15 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th>Sr. No</th>
                 <th>Image</th>
                 <th class="text-right">Article On SNF Title</th>
                 <th class="text-right">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of Project_Birthday_Celebrations_Data">
+            <tr *ngFor="let item of Newsartical_Form_Data;let i=index">
+               <td>{{ i + 1 }}</td>
                 <td>
                     <img [src]="item.imageUrl" alt="image"
                         style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
@@ -71,7 +73,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Edit Articles on SNF </h2>
-                        <form [formGroup]="Project_Birthday_Celebrations_Form"
+                        <form [formGroup]="Newsartical_Form"
                             (ngSubmit)="updatearticle_on_snf(selectedItem.id)">
                             <div class="mb-3">
                                 <label for="carrosalName" class="form-label">Name:</label>
