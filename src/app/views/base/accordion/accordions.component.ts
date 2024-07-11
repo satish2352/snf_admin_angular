@@ -10,9 +10,10 @@ import { ServiceService } from 'src/app/Service/service.service';
 export class AccordionsComponent implements OnInit {
   Home_4_Cards_Form: FormGroup | any;
   Home_4_Cards_Data: any;
-  selectedItem: any = { _id: '', name: '', para: '', city:'',imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', para: '', city: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
@@ -47,7 +48,12 @@ export class AccordionsComponent implements OnInit {
 
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.Home_4_Cards_Form.patchValue({ imageUrl: file });
+    if (file) {
+      this.Home_4_Cards_Form.patchValue({ imageUrl: file });
+      this.fileError = '';
+    } else {
+      this.fileError = 'Image file is required.';
+    }
   }
 
   toggleAddForm(): void {
@@ -65,7 +71,7 @@ export class AccordionsComponent implements OnInit {
       name: item.name,
       para: item.para,
       city: item.city,
-      imageUrl: item.imageUrl // Assuming you handle the image display separately
+      imageUrl: null // Clear the file input
     });
   }
 
@@ -77,6 +83,11 @@ export class AccordionsComponent implements OnInit {
 
   add_Home_4_Cards(event: Event): void {
     event.preventDefault();
+    if (this.Home_4_Cards_Form.invalid) {
+      this.Home_4_Cards_Form.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.Home_4_Cards_Form.value.name);
     formData.append('para', this.Home_4_Cards_Form.value.para);
@@ -88,7 +99,6 @@ export class AccordionsComponent implements OnInit {
         console.log(response);
         this.fetchHome_4_Cards_Data();
         this.showAddForm = false;
-        
       },
       (error) => {
         console.error(error);
@@ -98,12 +108,20 @@ export class AccordionsComponent implements OnInit {
 
   update_Home_4_Cards(id: number, event: Event): void {
     event.preventDefault();
+    if (this.Home_4_Cards_Form.invalid) {
+      this.Home_4_Cards_Form.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.Home_4_Cards_Form.value.name);
     formData.append('para', this.Home_4_Cards_Form.value.para);
     formData.append('city', this.Home_4_Cards_Form.value.city);
+
     if (this.Home_4_Cards_Form.value.imageUrl) {
       formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
+    } else {
+      formData.append('imageUrl', this.selectedItem.imageUrl);
     }
 
     this.service.update_Home_4_Cards(id, formData).subscribe(

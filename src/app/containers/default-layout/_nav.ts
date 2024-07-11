@@ -45,11 +45,11 @@ export const navItems: INavData[] = [
         name: 'Testimonial',
         url: '/base/accordion'
       },
-      {
-        // name: 'Breadcrumbs',
-        name: '2-Cards',
-        url: '/base/breadcrumbs'
-      },
+      // {
+      //   // name: 'Breadcrumbs',
+      //   name: '2-Cards',
+      //   url: '/base/breadcrumbs'
+      // },
       // {
       //   // name: 'Cards',
       //   name: 'Imp Project Carrired By SNF',

@@ -11,7 +11,8 @@ export class TypographyComponent implements OnInit {
   support_data: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
-  showEditForm:boolean=false;
+  showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(private formBuilder: FormBuilder, private service: ServiceService) { }
 
@@ -41,6 +42,7 @@ export class TypographyComponent implements OnInit {
     this.supporterForm.patchValue({
       imageUrl: file // Store the file object in the form
     });
+    this.fileError = ''; 
   }
 
   addSupporter(): void {
@@ -50,7 +52,8 @@ export class TypographyComponent implements OnInit {
       
       const file = this.supporterForm.value.imageUrl;
       if (!file) {
-        console.error('Image file is not selected');
+       
+        this.fileError = 'Image file is required.';
         return;
       }
 
@@ -72,6 +75,9 @@ export class TypographyComponent implements OnInit {
 
   onSelect(item: any): void {
     this.selectedItem = { ...item }; // Copy the item to avoid reference issues
+
+    console.log(item.name);
+    console.log(item.imageUrl);
     this.supporterForm.patchValue({
       name: item.name,
       imageUrl: null // Reset imageUrl in the form temporarily
@@ -83,16 +89,21 @@ export class TypographyComponent implements OnInit {
     if (this.supporterForm.valid) {
       const formData = new FormData();
       formData.append('name', this.supporterForm.value.name);
-  
+
+    
+
       const file = this.supporterForm.value.imageUrl;
-      if (file) {
+
+      if (file && typeof file === 'object') { // Assuming 'file' is a File object when a new image is selected
+        // If a new file is selected, append it to formData
         formData.append('imageUrl', file);
+      } else {
       }
-  
+
       this.service.updateSupporter(id, formData).subscribe(
         (response) => {
           console.log(response);
-          this.fetchsupporterData();
+          this.fetchsupporterData(); // Refresh the data to reflect the update
           this.initForm();
           this.showAddForm = false;
           this.selectedItem = { _id: '', name: '', imageUrl: '' }; // Reset selectedItem after update
@@ -103,6 +114,7 @@ export class TypographyComponent implements OnInit {
       );
     }
   }
+
   
   
 
@@ -145,5 +157,12 @@ export class TypographyComponent implements OnInit {
     this.showAddForm = !this.showAddForm;
     this.resetForm();
   }
+
+
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
+
+
 }
- 

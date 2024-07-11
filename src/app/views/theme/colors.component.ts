@@ -5,7 +5,6 @@ import { ServiceService } from 'src/app/Service/service.service';
 @Component({
   templateUrl: 'colors.component.html'
 })
-
 export class ColorsComponent implements OnInit {
   carrosalForm!: FormGroup;
   carrosalData: any;
@@ -16,7 +15,6 @@ export class ColorsComponent implements OnInit {
   constructor(
     private service: ServiceService,
     private fb: FormBuilder,
-    
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +25,7 @@ export class ColorsComponent implements OnInit {
   initializeForm(): void {
     this.carrosalForm = this.fb.group({
       name: ['', Validators.required],
-      image: [null, Validators.required]
+      image: [null]
     });
   }
 
@@ -42,13 +40,16 @@ export class ColorsComponent implements OnInit {
 
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.carrosalForm.patchValue({ image: file });
-    this.carrosalForm.get('image')?.updateValueAndValidity();
+    if (file) {
+      this.carrosalForm.patchValue({ image: file });
+      this.carrosalForm.get('image')?.updateValueAndValidity();
+    }
   }
 
   toggleAddForm(): void {
     this.showAddForm = true;
     this.showEditForm = false;
+    this.carrosalForm.get('image')?.setValidators([Validators.required]); // Add validator
     this.resetForm();
   }
 
@@ -56,12 +57,14 @@ export class ColorsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
-    this.carrosalForm.patchValue({
+
+    this.carrosalForm.get('image')?.clearValidators(); // Remove validator for edit form
+
+    this.carrosalForm.setValue({
       name: item.name,
-      imageUrl: item.imageUrl
-    })
+      image: null // Clear the file input
+    });
   }
- 
 
   resetForm(): void {
     this.carrosalForm.reset();
@@ -70,8 +73,13 @@ export class ColorsComponent implements OnInit {
   }
 
   addCarrosalItem(): void {
+    if (this.carrosalForm.invalid) {
+      this.carrosalForm.markAllAsTouched(); 
+      return;
+    }
+
     const formData = new FormData();
-    
+
     const nameControl = this.carrosalForm.get('name');
     const imageControl = this.carrosalForm.get('image');
 
@@ -104,7 +112,11 @@ export class ColorsComponent implements OnInit {
   }
 
   updateCarrosalItem(id: number): void {
-    debugger
+    if (this.carrosalForm.invalid) {
+      this.carrosalForm.markAllAsTouched(); // Mark all fields as touched to show validation messages
+      return;
+    }
+
     const formData = new FormData();
     const nameControl = this.carrosalForm.get('name');
     const imageControl = this.carrosalForm.get('image');
@@ -116,10 +128,11 @@ export class ColorsComponent implements OnInit {
     const file = imageControl?.value;
     if (file) {
       formData.append('imageUrl', file);
+    } else {
+      
     }
 
     this.service.updateCarrosalItem(id, formData).subscribe(
-      
       (response) => {
         console.log(response);
         this.fetchCarrosalData();
@@ -138,27 +151,29 @@ export class ColorsComponent implements OnInit {
       console.error('Invalid ID for delete operation:', id);
       return;
     }
-    
+
     console.log('Deleting item with ID:', id);
-  
+
     this.service.deleteCarrosalItem(id).subscribe(
       () => {
         console.log('Item deleted successfully');
-  
-       
         this.carrosalData = this.carrosalData.filter((item: any) => item.id !== id);
         console.log('Item deleted successfully');
-       
         this.showAddForm = false;
         this.showEditForm = false;
         this.resetForm();
-      
       },
       (error) => {
         console.error('Error deleting item:', error);
-        
       }
     );
   }
-  
+
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
+
+
+
 }

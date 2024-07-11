@@ -4,23 +4,33 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title mb-4">Add Cart</h2>
+            <h2 class="card-title mb-4">Add Testimonial</h2>
             <form [formGroup]="Home_4_Cards_Form" (submit)="add_Home_4_Cards($event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Title</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                <div *ngIf="Home_4_Cards_Form.get('name')?.touched && Home_4_Cards_Form.get('name')?.invalid" class="text-danger">
+                  Title is required.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalPara" class="form-label">Paragraph</label>
                 <input type="text" id="carrosalPara" class="form-control" formControlName="para" />
+                <div *ngIf="Home_4_Cards_Form.get('para')?.touched && Home_4_Cards_Form.get('para')?.invalid" class="text-danger">
+                  Paragraph is required.
+                </div>
               </div>
               <div class="mb-3">
-                <label for="carrosalPara" class="form-label">City</label>
-                <input type="text" id="carrosalcity" class="form-control" formControlName="city" />
+                <label for="carrosalCity" class="form-label">City</label>
+                <input type="text" id="carrosalCity" class="form-control" formControlName="city" />
+                <div *ngIf="Home_4_Cards_Form.get('city')?.touched && Home_4_Cards_Form.get('city')?.invalid" class="text-danger">
+                  City is required.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalImage" class="form-label">Image:</label>
                 <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
               </div>
               <button class="btn btn-primary mt-3" type="submit">Submit</button>
             </form>
@@ -47,8 +57,9 @@
       <thead>
         <tr>
           <th>Sr. No</th>
-          <th>Image</th>
           <th class="text-right">Title</th>
+
+          <th>Image</th>
           <th class="text-right">Paragraph</th>
           <th class="text-right">City</th>
           <th class="text-right">Action</th>
@@ -57,13 +68,14 @@
       <tbody>
         <tr *ngFor="let item of Home_4_Cards_Data;let i=index">
           <td>{{ i + 1 }}</td>
+          <td class="text-right">{{ item.name }}</td>
+
           <td style="width: 250px;">
             <img [src]="item.imageUrl" alt="image"
-              style="max-height: 150px; max-width: 200px; float: left; margin-right: 10px;" />
+                 style="max-height: 150px; max-width: 200px; float: left; margin-right: 10px;" />
           </td>
-          <td class="text-right">{{ item.name }}</td>
-          <td class="text-right">{{ item.para}}</td>
-          <td class="text-right">{{ item.city}}</td>
+          <td class="text-right">{{ item.para }}</td>
+          <td class="text-right">{{ item.city }}</td>
           <td style="width: 150px;" class="text-right">
             <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
             <button class="btn btn-danger" (click)="delete_Home_4_Cards(item.id)">Delete</button>
@@ -72,7 +84,6 @@
       </tbody>
     </table>
   </div>
-
 </div>
 
 <div *ngIf="showEditForm">
@@ -81,23 +92,33 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title mb-4">Edit Cart</h2>
+            <h2 class="card-title mb-4">Edit Testimonial</h2>
             <form [formGroup]="Home_4_Cards_Form" (submit)="update_Home_4_Cards(selectedItem.id, $event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Title:</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                <div *ngIf="Home_4_Cards_Form.get('name')?.touched && Home_4_Cards_Form.get('name')?.invalid" class="text-danger">
+                  Title is required.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalPara" class="form-label">Paragraph:</label>
                 <input type="text" id="carrosalPara" class="form-control" formControlName="para" />
+                <div *ngIf="Home_4_Cards_Form.get('para')?.touched && Home_4_Cards_Form.get('para')?.invalid" class="text-danger">
+                  Paragraph is required.
+                </div>
               </div>
               <div class="mb-3">
-                <label for="carrosalPara" class="form-label">City:</label>
-                <input type="text" id="carrosalcity" class="form-control" formControlName="city" />
+                <label for="carrosalCity" class="form-label">City:</label>
+                <input type="text" id="carrosalCity" class="form-control" formControlName="city" />
+                <div *ngIf="Home_4_Cards_Form.get('city')?.touched && Home_4_Cards_Form.get('city')?.invalid" class="text-danger">
+                  City is required.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalImage" class="form-label">Image:</label>
                 <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
               </div>
               <button class="btn btn-primary mt-3" type="submit">Update</button>
             </form>
@@ -107,12 +128,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
