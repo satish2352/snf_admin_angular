@@ -11,12 +11,12 @@ export class CarouselsComponent implements OnInit {
   upcomingproject_Form!: FormGroup;
   upcomingProject_Data: any;
   filteredProjects: any;
-  selectedItem: any = { id: '', ProjectTitle: '', Paragraph: '', category: '',imageUrl: '' };
+  selectedItem: any = { id: '', ProjectTitle: '', Paragraph: '', category: '', imageUrl: '' };
   categories: any[] = [];
   selectedCategory: string = '';
   showAddForm: boolean = false;
   showEditForm: boolean = false;
-  
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
@@ -63,22 +63,18 @@ export class CarouselsComponent implements OnInit {
     );
   }
 
-  // onFileChange(event: any): void {
-  //   const file = (event.target as HTMLInputElement)?.files?.[0];
-  //   this.upcomingproject_Form.patchValue({ image: file });
-  // // }
-  // onFileChange(event: any): void {
-  //   const file = (event.target as HTMLInputElement)?.files?.[0];
-  //   this.upcomingproject_Form.patchValue({ image: file });
-  // }
-  
-
   onFileChange(event: any): void {
-    const file = event.target.files[0];
-    this.upcomingproject_Form.patchValue({
-      imageUrl: file // Store the file object in the form
-    });
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      this.upcomingproject_Form.patchValue({
+        imageUrl: file
+      });
+      this.fileError = '';
+    } else {
+      this.fileError = 'Image file is required.';
+    }
   }
+
   onCategoryChange(event: any): void {
     this.selectedCategory = event.target.value;
     this.filterProjects();
@@ -104,33 +100,41 @@ export class CarouselsComponent implements OnInit {
     this.selectedItem = { ...item };
     this.showEditForm = true;
     this.showAddForm = false;
-  
-    // Initialize form with selected item values
+
     this.upcomingproject_Form.patchValue({
       ProjectTitle: item.ProjectTitle,
       Paragraph: item.Paragraph,
-      category: item.category, // Ensure this matches the form control name
-      imageUrl: null // Reset the image field
+      category: item.category,
+      imageUrl: null
     });
   }
+
   resetForm(): void {
     this.upcomingproject_Form.reset();
     this.upcomingproject_Form.markAsUntouched();
     this.upcomingproject_Form.markAsPristine();
+    this.fileError = '';
   }
 
   addupcomingproject(event: Event): void {
     event.preventDefault();
+    if (this.upcomingproject_Form.invalid) {
+      this.upcomingproject_Form.markAllAsTouched();
+      this.fileError = this.upcomingproject_Form.get('imageUrl')?.value ? '' : 'Image file is required.';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('ProjectTitle', this.upcomingproject_Form.value.ProjectTitle);
     formData.append('Paragraph', this.upcomingproject_Form.value.Paragraph);
     formData.append('category', this.upcomingproject_Form.value.category);
-    formData.append('imageUrl', this.upcomingproject_Form.value.imageUrl); // Use 'image' here instead of 'imageUrl'
-  
+    formData.append('imageUrl', this.upcomingproject_Form.value.imageUrl);
+
     this.service.addupcomingproject(formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchupcomingProject_Data();
+        alert('recRecord Added successfully!');
         this.showAddForm = false;
       },
       (error) => {
@@ -138,29 +142,32 @@ export class CarouselsComponent implements OnInit {
       }
     );
   }
-  
 
   updateUpcomingProject(id: number, event: Event): void {
     event.preventDefault();
-    
+    if (this.upcomingproject_Form.invalid) {
+      this.upcomingproject_Form.markAllAsTouched();
+      this.fileError = this.upcomingproject_Form.get('imageUrl')?.value ? '' : 'Image file is required.';
+      return;
+    }
+
     const formData = new FormData();
     formData.append('ProjectTitle', this.upcomingproject_Form.value.ProjectTitle);
     formData.append('Paragraph', this.upcomingproject_Form.value.Paragraph);
     formData.append('category', this.upcomingproject_Form.value.category);
-    
-    // Check if imageUrl is set in the form and append it to formData
-    const file = this.upcomingproject_Form.value.imageUrl;
-  
-      // Check if an image file is selected
-      if (file instanceof File) {
-        formData.append('imageUrl', file);
-      }
+
+    if (this.upcomingproject_Form.value.imageUrl) {
+      formData.append('imageUrl', this.upcomingproject_Form.value.imageUrl);
+    } else {
+    }
+
     this.service.updateupcomingproject(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchupcomingProject_Data();
+        alert('recRecord Updated successfully!');
         this.showEditForm = false;
-		  this.resetForm();
+        this.resetForm();
       },
       (error) => {
         console.error(error);
@@ -168,19 +175,28 @@ export class CarouselsComponent implements OnInit {
     );
   }
 
-  
-  
   deleteupcomingproject(id: number): void {
-    this.service.deleteupcomingproject(id).subscribe(
-      (response) => {
-        console.log(response);
-        // Update the frontend list immediately after deletion
-        this.fetchupcomingProject_Data();
-        this.upcomingproject_Form.reset();
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    // Ask for confirmation before deleting
+    const confirmed = confirm('Are you sure you want to delete this upcoming project?');
+  
+    if (confirmed) {
+      this.service.deleteupcomingproject(id).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchupcomingProject_Data();
+          this.upcomingproject_Form.reset();
+          // Show success alert
+          alert('Upcoming project deleted successfully!');
+        },
+        (error) => {
+          console.error('Error deleting upcoming project:', error);
+        }
+      );
+    }
+  }
+  
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
   }
 }

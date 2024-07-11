@@ -116,7 +116,14 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label for="carrosalImage" class="form-label">Image:</label>
+                <label for="currentImage" class="form-label">Current Image:</label><br />
+                <img [src]="selectedItem.imageUrl" alt="current image" class="img-fluid mb-2" style="max-height: 150px; max-width: 200px;" />
+                <br>
+                <small>{{ getFileName(selectedItem.imageUrl) }}</small>
+                <br><br>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalImage" class="form-label">New Image:</label>
                 <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
                 <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
               </div>

@@ -98,6 +98,7 @@ export class AccordionsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchHome_4_Cards_Data();
+        alert('recRecord Added successfully!');
         this.showAddForm = false;
       },
       (error) => {
@@ -121,13 +122,13 @@ export class AccordionsComponent implements OnInit {
     if (this.Home_4_Cards_Form.value.imageUrl) {
       formData.append('imageUrl', this.Home_4_Cards_Form.value.imageUrl);
     } else {
-      formData.append('imageUrl', this.selectedItem.imageUrl);
     }
 
     this.service.update_Home_4_Cards(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchHome_4_Cards_Data();
+        alert('recRecord Updated successfully!');
         this.showEditForm = false;
       },
       (error) => {
@@ -137,14 +138,28 @@ export class AccordionsComponent implements OnInit {
   }
 
   delete_Home_4_Cards(id: number): void {
-    this.service.delete_Home_4_Cards(id).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchHome_4_Cards_Data();
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+   
+    const confirmed = confirm('Are you sure you want to delete this card?');
+  
+    if (confirmed) {
+      this.service.delete_Home_4_Cards(id).subscribe(
+        (response) => {
+          console.log(response);
+          this.fetchHome_4_Cards_Data();
+          // Show success alert
+          alert('Testimonial deleted successfully!');
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   }
+  
+
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
+
 }

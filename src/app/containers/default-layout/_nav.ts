@@ -30,6 +30,16 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-star' }
   },
   {
+    // name: 'Accordion',
+    name: 'Testimonial',
+    url: '/base/accordion'
+  },
+  {
+    // name: 'Button groups',
+    name: 'Home Page Articles',
+    url: '/buttons/button-groups'
+  },
+  {
     // name: 'Components',
     name: 'Project',
     title: true
@@ -40,11 +50,11 @@ export const navItems: INavData[] = [
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
     children: [
-      {
-        // name: 'Accordion',
-        name: 'Testimonial',
-        url: '/base/accordion'
-      },
+      // {
+      //   // name: 'Accordion',
+      //   name: 'Testimonial',
+      //   url: '/base/accordion'
+      // },
       // {
       //   // name: 'Breadcrumbs',
       //   name: '2-Cards',
@@ -114,20 +124,20 @@ export const navItems: INavData[] = [
         name: 'Articles',
         url: '/buttons/buttons'
       },
-      {
-        // name: 'Button groups',
-        name: 'Home Page Articles',
-        url: '/buttons/button-groups'
-      },
+      
       {
         // name: 'Dropdowns',
         name: 'Awards Recognition',
         url: '/buttons/dropdowns'
-      }
+      },
+      {
+        name:'News And Articles',
+        url:'/forms/news-articles'
+      },
     ]
   },
    {
-    name: 'Forms',
+    name: 'About Us',
      url: '/forms',
      iconComponent: { name: 'cil-notes' },
      children: [
@@ -163,10 +173,7 @@ export const navItems: INavData[] = [
     //     name: 'Validation',
     //     url: '/forms/validation'
     //   },
-      {
-        name:'News And Articles',
-        url:'/forms/news-articles'
-      },
+      
      { 
      name:'Mentors',
      url:'/forms/mentors'

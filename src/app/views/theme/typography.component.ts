@@ -63,6 +63,7 @@ export class TypographyComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchsupporterData();
+          alert('recRecord Added successfully!');
           this.initForm();
           this.toggleAddForm(); // Hide the form after adding supporter
         },
@@ -104,6 +105,7 @@ export class TypographyComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchsupporterData(); // Refresh the data to reflect the update
+          alert('recRecord Updated successfully!');
           this.initForm();
           this.showAddForm = false;
           this.selectedItem = { _id: '', name: '', imageUrl: '' }; // Reset selectedItem after update
@@ -125,23 +127,32 @@ export class TypographyComponent implements OnInit {
       return;
     }
   
-    this.service.deleteSupporter(id).subscribe(
-      () => {
-        console.log('Supporter deleted successfully');
+    // Ask for confirmation before deleting
+    const confirmed = confirm('Are you sure you want to delete this supporter?');
   
-        // Remove the deleted item from support_data
-        this.support_data = this.support_data.filter((item: any) => item.id !== id);
+    if (confirmed) {
+      this.service.deleteSupporter(id).subscribe(
+        () => {
+          console.log('Clients deleted successfully');
   
-        // Optionally, reset selectedItem and form if necessary
-        this.selectedItem = { _id: '', name: '', imageUrl: '' };
-        this.supporterForm.reset();
-        this.showAddForm = false;
-      },
-      (error) => {
-        console.error('Error deleting supporter:', error);
-      }
-    );
+          // Remove the deleted item from support_data
+          this.support_data = this.support_data.filter((item: any) => item.id !== id);
+  
+          // Optionally, reset selectedItem and form if necessary
+          this.selectedItem = { _id: '', name: '', imageUrl: '' };
+          this.supporterForm.reset();
+          this.showAddForm = false;
+  
+          // Show success alert
+          alert('Clients deleted successfully!');
+        },
+        (error) => {
+          console.error('Error deleting supporter:', error);
+        }
+      );
+    }
   }
+  
   
 
 

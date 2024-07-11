@@ -11,6 +11,7 @@ export class ColorsComponent implements OnInit {
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  snackBar: any;
 
   constructor(
     private service: ServiceService,
@@ -98,6 +99,7 @@ export class ColorsComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchCarrosalData();
+          alert('recRecord Added successfully!');
           this.showAddForm = false;
           this.showEditForm = false;
           this.resetForm();
@@ -136,6 +138,7 @@ export class ColorsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchCarrosalData();
+        alert('recRecord Updated successfully!');
         this.showEditForm = false;
         this.showAddForm = false; // Ensure the form is closed
         this.resetForm();
@@ -151,23 +154,28 @@ export class ColorsComponent implements OnInit {
       console.error('Invalid ID for delete operation:', id);
       return;
     }
-
-    console.log('Deleting item with ID:', id);
-
-    this.service.deleteCarrosalItem(id).subscribe(
-      () => {
-        console.log('Item deleted successfully');
-        this.carrosalData = this.carrosalData.filter((item: any) => item.id !== id);
-        console.log('Item deleted successfully');
-        this.showAddForm = false;
-        this.showEditForm = false;
-        this.resetForm();
-      },
-      (error) => {
-        console.error('Error deleting item:', error);
-      }
-    );
+  
+    const confirmed = confirm('Are you sure you want to delete this record?');
+  
+    if (confirmed) {
+      console.log('Deleting item with ID:', id);
+  
+      this.service.deleteCarrosalItem(id).subscribe(
+        () => {
+          console.log('Item deleted successfully');
+          this.carrosalData = this.carrosalData.filter((item: any) => item.id !== id);
+          alert('Record deleted successfully!');
+          this.showAddForm = false;
+          this.showEditForm = false;
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error deleting item:', error);
+        }
+      );
+    }
   }
+  
 
 
   getFileName(url: string): string {
