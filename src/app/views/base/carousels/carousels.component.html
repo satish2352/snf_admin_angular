@@ -4,10 +4,10 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title mb-4">Add Upcoming Project</h2>
+            <h2 class="card-title mb-4">Add OnGoing Project</h2>
             <form [formGroup]="upcomingproject_Form" (ngSubmit)="addupcomingproject($event)">
               <div class="mb-3">
-                <label for="carrosalName" class="form-label">Name:</label>
+                <label for="carrosalName" class="form-label">Project title:</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="ProjectTitle" />
                 <div *ngIf="upcomingproject_Form.get('ProjectTitle')?.touched && upcomingproject_Form.get('ProjectTitle')?.invalid" class="text-danger">
                   Project title is required.
@@ -98,7 +98,7 @@
             <h2 class="card-title mb-4">Edit Upcoming Project</h2>
             <form [formGroup]="upcomingproject_Form" (ngSubmit)="updateUpcomingProject(selectedItem.id, $event)">
               <div class="mb-3">
-                <label for="carrosalName" class="form-label">Name:</label>
+                <label for="carrosalName" class="form-label">Project title:</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="ProjectTitle" />
                 <div *ngIf="upcomingproject_Form.get('ProjectTitle')?.touched && upcomingproject_Form.get('ProjectTitle')?.invalid" class="text-danger">
                   Project title is required.

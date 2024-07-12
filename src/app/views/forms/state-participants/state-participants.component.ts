@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
   selector: 'app-state-participants',
   templateUrl: './state-participants.component.html',
-  styleUrl: './state-participants.component.scss'
+  styleUrls: ['./state-participants.component.scss']
 })
-export class StateParticipantsComponent {
+export class StateParticipantsComponent implements OnInit {
   StateForm!: FormGroup;
   StateData: any;
-  selectedItem: any = { _id: '', name: '', imageUrl: '' };
+  selectedItem: any = { _id: 0, name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
 
@@ -18,11 +18,11 @@ export class StateParticipantsComponent {
     private service: ServiceService,
     private fb: FormBuilder
   ) { }
+
   ngOnInit(): void {
     this.initializeForm();
     this.fetchStateData();
   }
-
 
   initializeForm(): void {
     this.StateForm = this.fb.group({
@@ -30,11 +30,15 @@ export class StateParticipantsComponent {
       imageUrl: [null]
     });
   }
-  fetchStateData() {
+
+  fetchStateData(): void {
     this.service.getState_Participants().subscribe(
       (response) => {
         console.log(response);
         this.StateData = response;
+      },
+      (error) => {
+        console.error(error);
       }
     );
   }
@@ -42,6 +46,7 @@ export class StateParticipantsComponent {
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     this.StateForm.patchValue({ imageUrl: file });
+
   }
 
   toggleAddForm(): void {
@@ -55,8 +60,8 @@ export class StateParticipantsComponent {
     this.showEditForm = true;
     this.showAddForm = false;
     this.StateForm.patchValue({
-   name:item.name,
-   imageUrl:item.imageUrl
+      name: item.name,
+      imageUrl: null  // Reset image file input when editing
     });
   }
 
@@ -67,35 +72,52 @@ export class StateParticipantsComponent {
   }
 
   addStateTeamItem(): void {
+    if (this.StateForm.invalid) {
+      this.StateForm.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.StateForm.value.name);
-    formData.append('imageUrl', this.StateForm.value.imageUrl);
+    if (this.StateForm.value.imageUrl) {
+      formData.append('imageUrl', this.StateForm.value.imageUrl);
+    } else {
+      this.StateForm.controls['imageUrl'].setErrors({ required: true });
+      return;
+    }
 
     this.service.addState_Participants(formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchStateData();
+        alert('recRecord Added successfully!');
         this.showAddForm = false;
-        //location.reload();
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  
 
-  updateStateItem(id: number): void {
+  updateStateItem(id: number,event:Event): void {
+    if (this.StateForm.invalid) {
+      this.StateForm.markAllAsTouched();
+      return;
+    }
+    debugger
     const formData = new FormData();
     formData.append('name', this.StateForm.value.name);
-    formData.append('imageUrl', this.StateForm.value.imageUrl);
+    if (this.StateForm.value.imageUrl) {
+      formData.append('imageUrl', this.StateForm.value.imageUrl);
+    } else {
+    }
 
     this.service.updateState_Participants(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchStateData();
+        alert('recRecord Updated successfully!');
         this.showEditForm = false;
-        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -103,17 +125,22 @@ export class StateParticipantsComponent {
     );
   }
 
-  deleteStateItem(id: number): void {
+  deleteStateItem(id: number): void { // ID type changed to number
+    const confirmed = confirm('Are you sure you want to delete this state-participants?');
+    if (confirmed) {
     this.service.deleteState_Participants(id).subscribe(
       (response) => {
         console.log(response);
+        alert('state-participants deleted successfully!');
         this.fetchStateData();
-        //location.reload();
       },
       (error) => {
         console.error(error);
       }
     );
   }
-
+  }
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
 }

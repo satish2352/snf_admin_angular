@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl,Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
   selector: 'app-news-articles',
   templateUrl: './news-articles.component.html',
-  styleUrl: './news-articles.component.scss'
+  styleUrls: ['./news-articles.component.scss']
 })
-export class NewsArticlesComponent implements OnInit{
+export class NewsArticlesComponent implements OnInit {
   newsForm!: FormGroup;
   newsData: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
     private fb: FormBuilder
   ) { }
+
   ngOnInit(): void {
     this.initializeForm();
     this.fetchNewsData();
   }
-
 
   initializeForm(): void {
     this.newsForm = this.fb.group({
@@ -30,11 +31,15 @@ export class NewsArticlesComponent implements OnInit{
       imageUrl: [null]
     });
   }
-  fetchNewsData() {
+
+  fetchNewsData(): void {
     this.service.getHome_Media().subscribe(
       (response) => {
         console.log(response);
         this.newsData = response;
+      },
+      (error) => {
+        console.error(error);
       }
     );
   }
@@ -57,10 +62,9 @@ export class NewsArticlesComponent implements OnInit{
 
     this.newsForm.patchValue({
       name: item.name,
-       imageUrl: item.imageUrl // Assuming you handle the image display separately
+      imageUrl: null  // Reset image file input when editing
     });
   }
-
 
   resetForm(): void {
     this.newsForm.reset();
@@ -69,6 +73,11 @@ export class NewsArticlesComponent implements OnInit{
   }
 
   addNewsItem(): void {
+    if (this.newsForm.invalid) {
+      this.newsForm.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.newsForm.value.name);
     formData.append('imageUrl', this.newsForm.value.imageUrl);
@@ -77,8 +86,8 @@ export class NewsArticlesComponent implements OnInit{
       (response) => {
         console.log(response);
         this.fetchNewsData();
+        alert('recRecord Added successfully!');  
         this.showAddForm = false;
-        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -86,17 +95,28 @@ export class NewsArticlesComponent implements OnInit{
     );
   }
 
-  updateNewsItem(id: number): void {
+  updateNewsItem(id: number, event: Event): void {
+    event.preventDefault();
+    if (this.newsForm.invalid) {
+      this.newsForm.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.newsForm.value.name);
-    formData.append('imageUrl', this.newsForm.value.imageUrl);
+
+    // Check if a new image file is selected
+    if (this.newsForm.value.imageUrl instanceof File) {
+      formData.append('imageUrl', this.newsForm.value.imageUrl);
+    } else {
+    }
 
     this.service.updateHome_Media(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchNewsData();
+        alert('recRecord Updated successfully!');
         this.showEditForm = false;
-        //location.reload();
       },
       (error) => {
         console.error(error);
@@ -105,15 +125,23 @@ export class NewsArticlesComponent implements OnInit{
   }
 
   deletenewsItem(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this News-Articles?');
+    if (confirmed) {
     this.service.deleteHome_Media(id).subscribe(
       (response) => {
         console.log(response);
         this.fetchNewsData();
-        //location.reload();
+        alert('News-Articles deleted successfully!');
       },
       (error) => {
         console.error(error);
       }
+    
     );
+  }
+}
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
   }
 }

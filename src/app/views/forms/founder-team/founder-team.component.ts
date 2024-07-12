@@ -13,6 +13,7 @@ export class FounderTeamComponent {
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
@@ -27,7 +28,7 @@ export class FounderTeamComponent {
   initializeForm(): void {
     this.FounderForm = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: [null]
+      imageUrl: [null, Validators.required]
     });
   }
   fetchFounderData() {
@@ -75,6 +76,7 @@ export class FounderTeamComponent {
       (response) => {
         console.log(response);
         this.fetchFounderData();
+        alert('recRecord Added successfully!');   
         this.showAddForm = false;
         //location.reload();
       },
@@ -84,29 +86,41 @@ export class FounderTeamComponent {
     );
   }
 
-  updateFounderItem(id: number): void {
-    const formData = new FormData();
-    formData.append('name', this.FounderForm.value.name);
+  updateFounderItem(id: number,event:Event): void {
+    event.preventDefault();
+    if (this.FounderForm.invalid) {
+    this.FounderForm.markAllAsTouched();
+    return;
+  }
+  const formData = new FormData();
+  formData.append('name', this.FounderForm.value.name);
+  if (this.FounderForm.value.imageUrl instanceof File) {
     formData.append('imageUrl', this.FounderForm.value.imageUrl);
-
-    this.service.updateFounderParticipant(id, formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchFounderData();
-        this.showEditForm = false;
-       // location.reload();
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  } else {
   }
 
+  this.service.updateFounderParticipant(id, formData).subscribe(
+    (response) => {
+      console.log(response);
+      this.fetchFounderData();
+      alert('recRecord Updated successfully!');
+      this.showEditForm = false;
+     // location.reload();
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+}
+
   deleteFounderItem(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this Founder?');
+    if (confirmed) {
     this.service.deleteFounderParticipant(id).subscribe(
       (response) => {
         console.log(response);
         this.fetchFounderData();
+        alert('Fonder deleted successfully!');
         //location.reload();
       },
       (error) => {
@@ -114,6 +128,9 @@ export class FounderTeamComponent {
       }
     );
   }
-
+  }
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
 
 }

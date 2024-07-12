@@ -30,7 +30,7 @@ export class AccordionsComponent implements OnInit {
       name: ['', Validators.required],
       para: ['', Validators.required],
       city: ['', Validators.required],
-      imageUrl: [null]
+      imageUrl: [null, Validators.required]
     });
   }
 
@@ -139,7 +139,7 @@ export class AccordionsComponent implements OnInit {
 
   delete_Home_4_Cards(id: number): void {
    
-    const confirmed = confirm('Are you sure you want to delete this card?');
+    const confirmed = confirm('Are you sure you want to delete this Testimonial?');
   
     if (confirmed) {
       this.service.delete_Home_4_Cards(id).subscribe(

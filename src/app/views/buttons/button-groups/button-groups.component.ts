@@ -14,6 +14,7 @@ export class ButtonGroupsComponent implements OnInit {
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
@@ -28,7 +29,7 @@ export class ButtonGroupsComponent implements OnInit {
   initializeForm(): void {
     this.snf_in_news_papers_Form = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: [null]
+      imageUrl: [null, Validators.required]
     });
   }
 
@@ -89,6 +90,7 @@ export class ButtonGroupsComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchsnf_in_news_papers_Data();
+          alert('recRecord Added successfully!'); 
           this.toggleAddForm();
           this.showAddForm = false;
         },
@@ -99,36 +101,67 @@ export class ButtonGroupsComponent implements OnInit {
     }
   }
 
-  updatesnf_in_news_papers(id: number): void {
-    if (this.snf_in_news_papers_Form.valid) {
-      const formData = new FormData();
-      formData.append('name', this.snf_in_news_papers_Form.value.name);
-      const file = this.snf_in_news_papers_Form.value.imageUrl;
+  // updatesnf_in_news_papers(id: number, event: Event): void {
+  //   if (this.snf_in_news_papers_Form.valid) {
+  //     const formData = new FormData();
+  //     formData.append('name', this.snf_in_news_papers_Form.value.name);
+  //     const file = this.snf_in_news_papers_Form.value.imageUrl;
   
-      // Check if an image file is selected
-      if (file instanceof File) {
-        formData.append('imageUrl', file);
-      }
+  //     // Check if an image file is selected
+  //     if (file instanceof File) {
+  //       formData.append('imageUrl', file);
+  //     }
   
-      this.service.updatesnf_in_news_papers(id, formData).subscribe(
-        (response) => {
-          console.log(response);
-          this.fetchsnf_in_news_papers_Data(); // Refresh data after update
-          this.showEditForm = false;
-          this.resetForm(); // Reset form after successful update
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+  //     this.service.updatesnf_in_news_papers(id, formData).subscribe(
+  //       (response) => {
+  //         console.log(response);
+  //         this.fetchsnf_in_news_papers_Data(); // Refresh data after update
+  //         this.showEditForm = false;
+  //         this.resetForm(); // Reset form after successful update
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //       }
+  //     );
+  //   }
+  // }
+  updatesnf_in_news_papers(id: number, event: Event): void {
+    event.preventDefault();
+    if (this.snf_in_news_papers_Form.invalid) {
+      this.snf_in_news_papers_Form.markAllAsTouched();
+      return;
     }
+
+    const formData = new FormData();
+    formData.append('name', this.snf_in_news_papers_Form.value.name);
+
+    // Check if a new image file is selected
+    if (this.snf_in_news_papers_Form.value.imageUrl instanceof File) {
+      formData.append('imageUrl', this.snf_in_news_papers_Form.value.imageUrl);
+    } else {
+    }
+
+    this.service.updatesnf_in_news_papers(id, formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.fetchsnf_in_news_papers_Data();
+        alert('recRecord Updated successfully!');
+        this.showEditForm = false;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   deletesnf_in_news_papers(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this Home News ?');
+    if (confirmed) {
     this.service.deletesnf_in_news_papers(id).subscribe(
       (response) => {
         console.log(response);
         this.fetchsnf_in_news_papers_Data();
+        alert('Home News deleted successfully!');
         this.snf_in_news_papers_Form.reset();
         
       },
@@ -138,4 +171,7 @@ export class ButtonGroupsComponent implements OnInit {
     );
   }
 }
-
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
+}

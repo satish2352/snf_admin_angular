@@ -128,7 +128,7 @@ export class TypographyComponent implements OnInit {
     }
   
     // Ask for confirmation before deleting
-    const confirmed = confirm('Are you sure you want to delete this supporter?');
+    const confirmed = confirm('Are you sure you want to delete this Clients?');
   
     if (confirmed) {
       this.service.deleteSupporter(id).subscribe(

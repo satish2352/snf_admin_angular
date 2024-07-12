@@ -46,7 +46,8 @@ export const navItems: INavData[] = [
   },
   {
     // name: 'Base',
-    name: 'Our On Going Project',
+    
+    name: 'Our Projects',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
     children: [
@@ -103,7 +104,7 @@ export const navItems: INavData[] = [
      
       {
         //   name: 'Popovers',
-        name: 'Upcoming Project',
+        name: 'On Going Project',
         url: '/base/carousel'
       },
       {

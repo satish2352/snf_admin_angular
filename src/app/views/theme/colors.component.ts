@@ -155,14 +155,14 @@ export class ColorsComponent implements OnInit {
       return;
     }
   
-    const confirmed = confirm('Are you sure you want to delete this record?');
+    const confirmed = confirm('Are you sure you want to delete this record slider?');
   
     if (confirmed) {
       console.log('Deleting item with ID:', id);
   
       this.service.deleteCarrosalItem(id).subscribe(
         () => {
-          console.log('Item deleted successfully');
+          console.log('Slider deleted successfully');
           this.carrosalData = this.carrosalData.filter((item: any) => item.id !== id);
           alert('Record deleted successfully!');
           this.showAddForm = false;

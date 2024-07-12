@@ -177,7 +177,7 @@ export class CarouselsComponent implements OnInit {
 
   deleteupcomingproject(id: number): void {
     // Ask for confirmation before deleting
-    const confirmed = confirm('Are you sure you want to delete this upcoming project?');
+    const confirmed = confirm('Are you sure you want to delete this Ongoing project?');
   
     if (confirmed) {
       this.service.deleteupcomingproject(id).subscribe(
@@ -186,7 +186,7 @@ export class CarouselsComponent implements OnInit {
           this.fetchupcomingProject_Data();
           this.upcomingproject_Form.reset();
           // Show success alert
-          alert('Upcoming project deleted successfully!');
+          alert('Ongoing project deleted successfully!');
         },
         (error) => {
           console.error('Error deleting upcoming project:', error);

@@ -13,6 +13,7 @@ export class NriParticipantsComponent {
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+  fileError: string = '';
 
   constructor(
     private service: ServiceService,
@@ -27,7 +28,7 @@ export class NriParticipantsComponent {
   initializeForm(): void {
     this.NriForm = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: [null]
+      imageUrl: [null, Validators.required]
     });
   }
   fetchNriData() {
@@ -75,6 +76,7 @@ export class NriParticipantsComponent {
       (response) => {
         console.log(response);
         this.fetchNriData();
+        alert('recRecord Added successfully!'); 
         this.showAddForm = false;
         //location.reload();
       },
@@ -84,35 +86,53 @@ export class NriParticipantsComponent {
     );
   }
 
-  updateNriItem(id: number): void {
-    const formData = new FormData();
-    formData.append('name', this.NriForm.value.name);
-    formData.append('imageUrl', this.NriForm.value.imageUrl);
+  updateNriItem(id: number,event:Event): void {
+    event.preventDefault();
+    if (this.NriForm.invalid) {
+   this.NriForm.markAllAsTouched();
+   return;
+ }
 
-    this.service.updateNRI_Participants(id, formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.fetchNriData();
-        this.showEditForm = false;
-       //location.reload();
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+ const formData = new FormData();
+ formData.append('name', this.NriForm.value.name);
+if (this.NriForm.value.imageUrl instanceof File) {
+   formData.append('imageUrl', this.NriForm.value.imageUrl);
+ } else {
+ }
+
+ this.service.updateNRI_Participants(id, formData).subscribe(
+   (response) => {
+     console.log(response);
+     this.fetchNriData();
+     alert('recRecord Updated successfully!');
+     this.showEditForm = false;
+
+   },
+   (error) => {
+     console.error(error);
+   }
+ );
+}
 
   deleteNriItem(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this NRI?');
+    if (confirmed) {
     this.service.deleteNRI_Participants(id).subscribe(
       (response) => {
         console.log(response);
         this.fetchNriData();
+        alert('NRI-participants deleted successfully!');
         //location.reload();
       },
       (error) => {
         console.error(error);
       }
     );
+  }
+}
+
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
   }
 
 }
