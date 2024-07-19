@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ServiceService } from 'src/app/Service/service.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-button-groups',
@@ -9,12 +10,18 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 
 export class ButtonGroupsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   snf_in_news_papers_Form!: FormGroup;
   snf_in_news_papers_Data: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
 
   constructor(
     private service: ServiceService,
@@ -38,8 +45,26 @@ export class ButtonGroupsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.snf_in_news_papers_Data = response;
+        this.filterData();
+        // this.snf_in_news_papers_Data.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
+  }
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.snf_in_news_papers_Data.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
   }
 
  

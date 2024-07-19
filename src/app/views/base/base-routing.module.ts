@@ -18,6 +18,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { PlaceholdersComponent } from './placeholders/placeholders.component';
 import { DefaultLayoutComponent } from 'src/app/containers/default-layout/default-layout.component';
 import { ProjectComponent } from './projectcategory/projectcategory.component';
+// import { UpcomingEventComponent } from './upcoming-event/upcoming-event.component';
 const routes: Routes = [
   {path:'',component:DefaultLayoutComponent,
  
@@ -111,6 +112,13 @@ const routes: Routes = [
           title: 'project',
         },
       },
+      // {
+      //   path: 'upcoming',
+      //   component: UpcomingEventComponent,
+      //   data: {
+      //     title: 'Upcoming',
+      //   },
+      // },
       {
         path: 'spinners',
         component: SpinnersComponent,

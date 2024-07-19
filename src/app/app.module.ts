@@ -8,7 +8,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Import routing module
 import { AppRoutingModule } from './app-routing.module';
-
+import { BaseModule } from './views/base/base.module';
 // Import app component
 import { AppComponent } from './app.component';
 import {AuthGuard} from './auth.guard';
@@ -17,6 +17,9 @@ import {JwtInterceptor} from './jwt.interceptor'
 // Import containers
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import {
   AvatarModule,
@@ -37,6 +40,10 @@ import {
   SidebarModule,
   TabsModule,
   UtilitiesModule,
+  
+  
+  
+  
   
 } from '@coreui/angular';
 
@@ -78,7 +85,10 @@ const APP_CONTAINERS = [
     CardModule,
     NgScrollbarModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   providers: [
     {

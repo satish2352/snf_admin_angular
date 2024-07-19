@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from 'src/app/Service/service.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   templateUrl: 'colors.component.html'
 })
 export class ColorsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   carrosalForm!: FormGroup;
   carrosalData: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   snackBar: any;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
 
   constructor(
     private service: ServiceService,
@@ -35,8 +42,27 @@ export class ColorsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.carrosalData = response;
+        this.filterData();
+        // this.carrosalData.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
+  }
+
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.carrosalData.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
   }
 
   onFileChange(event: any): void {
@@ -99,7 +125,7 @@ export class ColorsComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchCarrosalData();
-          alert('recRecord Added successfully!');
+          alert('Record Added successfully!');
           this.showAddForm = false;
           this.showEditForm = false;
           this.resetForm();

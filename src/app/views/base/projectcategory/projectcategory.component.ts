@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -7,6 +8,11 @@ import { ServiceService } from 'src/app/Service/service.service';
   templateUrl: './projectcategory.component.html',
 })
 export class ProjectComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
   Project_Form!: FormGroup;
   Project_Data: any[] = [];
   showAddForm: boolean = false;
@@ -51,11 +57,29 @@ export class ProjectComponent implements OnInit {
     this.service.getProject().subscribe(
       (response: any) => {
         this.Project_Data = response;
+        this.filterData();
       },
       (error) => {
         console.error('Error fetching projects', error);
       }
     );
+  }
+
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.Project_Data.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
   }
 
   addProject(event: Event): void {

@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ServiceService } from 'src/app/Service/service.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   templateUrl: 'typography.component.html',
 })
 export class TypographyComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   supporterForm!: FormGroup;
   support_data: any;
@@ -13,6 +15,11 @@ export class TypographyComponent implements OnInit {
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
+
 
   constructor(private formBuilder: FormBuilder, private service: ServiceService) { }
 
@@ -33,9 +40,29 @@ export class TypographyComponent implements OnInit {
       (response) => {
         console.log(response);
         this.support_data = response;
+        this.filterData();
+        // this.support_data.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
   }
+  
+filterData() {
+  const query = this.searchQuery.toLowerCase();
+  this.filteredCarrosalData = this.support_data.filter((item: { name: string; }) => 
+    item.name.toLowerCase().includes(query)
+  );
+  this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+}
+
+onPageChange(event: PageEvent) {
+  this.pageIndex = event.pageIndex;
+  this.pageSize = event.pageSize;
+}
+
+onSearchChange() {
+  this.filterData();
+}
+
 
   onFileChange(event: any): void {
     const file = event.target.files[0];

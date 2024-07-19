@@ -29,6 +29,9 @@ import{MentorsComponent} from './mentors/mentors.component'
 import{FounderTeamComponent} from './founder-team/founder-team.component'
 import{NriParticipantsComponent} from './nri-participants/nri-participants.component'
 import{StateParticipantsComponent} from './state-participants/state-participants.component'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     RangesComponent,
@@ -60,7 +63,10 @@ import{StateParticipantsComponent} from './state-participants/state-participants
     ButtonGroupModule,
     DropdownModule,
     SharedModule,
-    ListGroupModule
+    ListGroupModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
   ]
 })
 export class CoreUIFormsModule {

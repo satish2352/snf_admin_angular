@@ -9,7 +9,11 @@ import { TypographyComponent } from './typography.component';
 
 // Theme Routing
 import { ThemeRoutingModule } from './theme-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 @NgModule({
   imports: [
@@ -21,7 +25,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     IconModule,
     NavModule,
     TabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   declarations: [
     ColorsComponent,

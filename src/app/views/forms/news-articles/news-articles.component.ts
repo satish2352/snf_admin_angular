@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -8,6 +9,11 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./news-articles.component.scss']
 })
 export class NewsArticlesComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
   newsForm!: FormGroup;
   newsData: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
@@ -37,11 +43,30 @@ export class NewsArticlesComponent implements OnInit {
       (response) => {
         console.log(response);
         this.newsData = response;
+        this.filterData();
+        // this.newsData.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       },
       (error) => {
         console.error(error);
       }
     );
+  }
+
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.newsData.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
   }
 
   onFileChange(event: any): void {

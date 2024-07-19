@@ -8,7 +8,7 @@
                         <form [formGroup]="FounderForm" (ngSubmit)="addFounderItem()">
                             <div class="mb-3">
                                 <label for="founderName" class="form-label">Name:</label>
-                                <input type="text" id="founderName" class="form-control" formControlName="name" />
+                                <input type="text" id="founderName" class="form-control" formControlName="name"  placeholder="Name"/>
                                 <div *ngIf="FounderForm.get('name')?.touched && FounderForm.get('name')?.invalid" class="text-danger">
                                     Name is required.
                                   </div>
@@ -36,6 +36,13 @@
     <div class="container">
         <div class="row justify-content-end">
             <div class="col-auto">
+                <mat-form-field appearance="outline">
+                  
+                  <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+                </mat-form-field>
+              </div>
+          
+            <div class="col-auto">
                 <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
             </div>
         </div>
@@ -52,8 +59,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of FounderData;let i=index">
-                <td>{{ i + 1 }}</td>
+            <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+                <td>{{ i + 1 + pageIndex * pageSize }}</td>
                 <td class="text-right">{{ item.name }}</td>
                 <td>
                     <img [src]="item.imageUrl" alt="image"
@@ -66,7 +73,8 @@
             </tr>
         </tbody>
     </table>
-
+    <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+    </mat-paginator>
 
 </div>
 

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -7,7 +8,13 @@ import { ServiceService } from 'src/app/Service/service.service';
   templateUrl: './nri-participants.component.html',
   styleUrl: './nri-participants.component.scss'
 })
-export class NriParticipantsComponent {
+export class NriParticipantsComponent implements OnInit{
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
+
   NriForm!: FormGroup;
   NriData: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
@@ -36,10 +43,28 @@ export class NriParticipantsComponent {
       (response) => {
         console.log(response);
         this.NriData = response;
+        this.filterData();
+        // this.NriData.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
   }
 
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.NriData.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
+  }
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     this.NriForm.patchValue({ imageUrl: file });

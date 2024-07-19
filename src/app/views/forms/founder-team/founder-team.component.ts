@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -7,7 +8,12 @@ import { ServiceService } from 'src/app/Service/service.service';
   templateUrl: './founder-team.component.html',
   styleUrl: './founder-team.component.scss'
 })
-export class FounderTeamComponent {
+export class FounderTeamComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
   FounderForm!: FormGroup;
   FounderData: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
@@ -36,9 +42,28 @@ export class FounderTeamComponent {
       (response) => {
         console.log(response);
         this.FounderData = response;
+        this.filterData();
+        // this.FounderData.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
   }
+  
+filterData() {
+  const query = this.searchQuery.toLowerCase();
+  this.filteredCarrosalData = this.FounderData.filter((item: { name: string; }) => 
+    item.name.toLowerCase().includes(query)
+  );
+  this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+}
+
+onPageChange(event: PageEvent) {
+  this.pageIndex = event.pageIndex;
+  this.pageSize = event.pageSize;
+}
+
+onSearchChange() {
+  this.filterData();
+}
 
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];

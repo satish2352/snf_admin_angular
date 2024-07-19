@@ -1,59 +1,141 @@
-<c-row>
-  <c-col xs="12">
-    <app-docs-callout href="components/tooltip" name="Tooltip"></app-docs-callout>
-  </c-col>
-  <c-col xs="12">
-    <c-card class="mb-4">
-      <c-card-header ngPreserveWhitespaces>
-        <strong>Angular Tooltip</strong> <small>Basic example</small>
-      </c-card-header>
-      <c-card-body>
-        <p class="text-medium-emphasis small">
-          Hover over the links below to see tooltips:
-        </p>
-        <app-docs-example href="components/tooltip">
-          <p class="text-medium-emphasis">
-            Tight pants next level keffiyeh
-            <a cTooltip="Tooltip text" routerLink="./" [cTooltipVisible]="true"> you probably </a>
-            haven&#39;theard of them. Photo booth beard raw denim letterpress vegan messenger
-            bag stumptown. Farm-to-table seitan, mcsweeney&#39;s fixie sustainable quinoa 8-bit
-            american apparel
-            <a cTooltip="Tooltip text" routerLink="./"> have a </a>
-            terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo
-            thundercats. Tofu biodiesel williamsburg marfa, four loko mcsweeney&#39;&#39;s
-            cleanse vegan chambray. A really ironic artisan
-            <a cTooltip="Tooltip text" href> whatever keytar </a>
-            scenester farm-to-table banksy Austin
-            <a cTooltip="Tooltip text" href> twitter handle </a>
-            freegan cred raw denim single-origin coffee viral.
-          </p>
-        </app-docs-example>
-        <p class="text-medium-emphasis small">
-          Hover over the buttons below to see the four tooltips directions: top, right, bottom,
-          and left.
-        </p>
-        <app-docs-example href="components/tooltip">
-          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." cTooltipPlacement="top"
-                  class="me-1" color="secondary">Tooltip on
-            top
-          </button>
-          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." cTooltipPlacement="right"
-                  class="me-1" color="secondary">Tooltip
-            on right
-          </button>
-          <button cButton cTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-                  cTooltipPlacement="bottom"
-                  class="me-1" color="secondary">Tooltip
-            on bottom
-          </button>
-          <button cButton [cTooltip]="tooltipContent" cTooltipPlacement="left"
-                  class="me-1" color="secondary">Tooltip on left
-            <ng-template #tooltipContent>
-              Vivamus sagittis lacus vel augue laoreet rutrum <i cTextColor="warning">faucibus</i>.
-            </ng-template>
-          </button>
-        </app-docs-example>
-      </c-card-body>
-    </c-card>
-  </c-col>
-</c-row>
+<div *ngIf="showAddForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Add OnGoing Project</h2>
+            <form [formGroup]="upcomingproject_Form" (ngSubmit)="addupcomingproject($event)">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category">
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="upcomingproject_Form.get('category')?.touched && upcomingproject_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="imageTitles"  placeholder="Title"/>
+                <div *ngIf="upcomingproject_Form.get('imageTitles')?.touched && upcomingproject_Form.get('imageTitles')?.invalid" class="text-danger">
+                   Title is required.
+                </div>
+              </div>
+            
+              
+              <div class="mb-3">
+                <label for="carrosalImage" class="form-label">Image:</label>
+                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" *ngIf="!showAddForm && !showEditForm">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <mat-form-field appearance="outline">
+          
+          <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+        </mat-form-field>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <!-- <div class="mb-3">
+    <label for="filterCategory" class="form-label">Filter by Category:</label>
+    <select id="filterCategory" class="form-control" (change)="onCategoryChange($event)">
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </div> -->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Sr .No</th>
+        <th class="text-right">Project Title</th>
+        <th>Image</th>
+       
+        <!-- <th class="text-right">category</th> -->
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+        <td>{{ i + 1 + pageIndex * pageSize }}</td>
+        <td class="text-right">{{ item.imageTitle }}</td>
+        <td>
+          <img [src]="item.images" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
+        </td>
+       
+        <!-- <td class="text-right">{{ item.category }}</td> -->
+        <td class="text-right">
+          <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
+          <button class="btn btn-danger" (click)="deleteupcomingproject(item.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
+<div *ngIf="showEditForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Edit Upcoming Project</h2>
+            <form [formGroup]="upcomingproject_Form" (ngSubmit)="updateUpcomingProject(selectedItem.id, $event)">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category">
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="upcomingproject_Form.get('category')?.touched && upcomingproject_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="imageTitles" />
+                <div *ngIf="upcomingproject_Form.get('imageTitles')?.touched && upcomingproject_Form.get('imageTitles')?.invalid" class="text-danger">
+                  Project title is required.
+                </div>
+              </div>
+             
+              
+              <div class="mb-3">
+                <label for="currentImage" class="form-label">Current Image:</label><br />
+                <img [src]="selectedItem.images" alt="current image" class="img-fluid mb-2" style="max-height: 150px; max-width: 200px;" />
+                <br>
+                <small>{{ getFileName(selectedItem.images) }}</small>
+                <br><br>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalImage" class="form-label">New Image (optional):</label>
+                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

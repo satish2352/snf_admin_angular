@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -8,12 +10,17 @@ import { ServiceService } from 'src/app/Service/service.service';
   styleUrls: ['./accordions.component.scss']
 })
 export class AccordionsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   Home_4_Cards_Form: FormGroup | any;
   Home_4_Cards_Data: any;
   selectedItem: any = { _id: '', name: '', para: '', city: '', imageUrl: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
 
   constructor(
     private service: ServiceService,
@@ -39,6 +46,8 @@ export class AccordionsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.Home_4_Cards_Data = response;
+        this.filterData();
+        // this.Home_4_Cards_Data.sort((a: any, b:any) => b.id - a.id);
       },
       (error) => {
         console.error(error);
@@ -46,6 +55,23 @@ export class AccordionsComponent implements OnInit {
     );
   }
 
+  
+filterData() {
+  const query = this.searchQuery.toLowerCase();
+  this.filteredCarrosalData = this.Home_4_Cards_Data.filter((item: { name: string; }) => 
+    item.name.toLowerCase().includes(query)
+  );
+  this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+}
+
+onPageChange(event: PageEvent) {
+  this.pageIndex = event.pageIndex;
+  this.pageSize = event.pageSize;
+}
+
+onSearchChange() {
+  this.filterData();
+}
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     if (file) {

@@ -380,7 +380,8 @@ export class ServiceService {
   }
 
   getupcomingproject() {
-    return this.http.get(`${this.upcoming_url}/get`)
+    // return this.http.get<UpcomingProject[]>(`${this.apiUrl}/upcomingprojects`);
+    return this.http.get<any[]>(`${this.upcoming_url}/get`)
   }
 
   updateupcomingproject(id: number, formData: any) {
@@ -419,4 +420,27 @@ export class ServiceService {
     return this.http.get(`${this.projectcategory_url}/get`);
   }
   
+ 
+
+  addupcomingimage(formdata: any) {
+    return this.http.post(`${this.upcoming_url}/addImagesByCategory`, formdata);
+  }
+
+  getupcomingimage() {
+    return this.http.get(`https://snf.backend.socialforumindia.com/upcomingeventsRoute/getAllImagesData`)
+  }
+
+  updateupcomingimage(id: number, formData: any) {
+    return this.http.put(`${this.upcoming_url}/putImages/${id}`, formData);
+  }
+
+  deleteupcomingimage(id: number) {
+    return this.http.delete(`${this.upcoming_url}/deleteImages/${id}`)
+
+  }
+  // deleteupcomingimage(id: number): Observable<string> {
+  //   const url = `${this.upcoming_url}/delete/${id}`;
+  //   return this.http.delete(url, { responseType: 'text' });
+  // }
+
 }

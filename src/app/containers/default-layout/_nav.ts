@@ -96,21 +96,22 @@ export const navItems: INavData[] = [
       //   name: 'Sport Projects',
       //   url: '/base/placeholder'
       // },
-      // {
-      //   //   name: 'Popovers',
-      //   name: 'Birthday Celebrations',
-      //   url: '/base/popovers'
-      // },
-     
+    
+      {
+        //name;'projectcategory'
+        name:'Add project Category',
+        url:'/base/project'
+      },
       {
         //   name: 'Popovers',
         name: 'On Going Project',
         url: '/base/carousel'
       },
+     
       {
-        //name;'projectcategory'
-        name:'Add project Category',
-        url:'/base/project'
+        //   name: 'Popovers',
+        name: 'Add upcoming',
+        url: '/base/tooltips'
       },
     ]
   },

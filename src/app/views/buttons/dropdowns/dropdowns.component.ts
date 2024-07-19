@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
 
 @Component({
@@ -8,6 +9,11 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 
 export class DropdownsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
   awards_recognation_Form!: FormGroup;
   awards_recognation_Data: any;
   selectedItem: any = { _id: '', name: '', imageUrl: '' };
@@ -37,9 +43,28 @@ export class DropdownsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.awards_recognation_Data = response;
+        this.filterData();
+        // this.awards_recognation_Data.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
       }
     );
   }
+  
+filterData() {
+  const query = this.searchQuery.toLowerCase();
+  this.filteredCarrosalData = this.awards_recognation_Data.filter((item: { name: string; }) => 
+    item.name.toLowerCase().includes(query)
+  );
+  this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+}
+
+onPageChange(event: PageEvent) {
+  this.pageIndex = event.pageIndex;
+  this.pageSize = event.pageSize;
+}
+
+onSearchChange() {
+  this.filterData();
+}
 
 
 

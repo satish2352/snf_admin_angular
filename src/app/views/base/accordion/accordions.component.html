@@ -8,21 +8,21 @@
             <form [formGroup]="Home_4_Cards_Form" (submit)="add_Home_4_Cards($event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Title</label>
-                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                <input type="text" id="carrosalName" class="form-control" formControlName="name" placeholder="Name"/>
                 <div *ngIf="Home_4_Cards_Form.get('name')?.touched && Home_4_Cards_Form.get('name')?.invalid" class="text-danger">
                   Title is required.
                 </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalPara" class="form-label">Paragraph</label>
-                <input type="text" id="carrosalPara" class="form-control" formControlName="para" />
+                <input type="text" id="carrosalPara" class="form-control" formControlName="para" placeholder="Paragraph" />
                 <div *ngIf="Home_4_Cards_Form.get('para')?.touched && Home_4_Cards_Form.get('para')?.invalid" class="text-danger">
                   Paragraph is required.
                 </div>
               </div>
               <div class="mb-3">
                 <label for="carrosalCity" class="form-label">City</label>
-                <input type="text" id="carrosalCity" class="form-control" formControlName="city" />
+                <input type="text" id="carrosalCity" class="form-control" formControlName="city" placeholder="City" />
                 <div *ngIf="Home_4_Cards_Form.get('city')?.touched && Home_4_Cards_Form.get('city')?.invalid" class="text-danger">
                   City is required.
                 </div>
@@ -44,6 +44,14 @@
 <div class="text-center" *ngIf="!showAddForm && !showEditForm">
   <div class="container">
     <div class="row justify-content-end">
+      
+   <div class="col-auto">
+    <mat-form-field appearance="outline">
+      
+      <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+    </mat-form-field>
+  </div>
+
       <div class="col-auto">
         <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
       </div>
@@ -66,8 +74,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of Home_4_Cards_Data;let i=index">
-          <td>{{ i + 1 }}</td>
+        <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+          <td>{{ i + 1 + pageIndex * pageSize }}</td>
+
           <td class="text-right">{{ item.name }}</td>
 
           <td style="width: 250px;">
@@ -83,8 +92,10 @@
         </tr>
       </tbody>
     </table>
+    <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+    </mat-paginator>
   </div>
-</div>
+
 
 <div *ngIf="showEditForm">
   <div class="container mt-5">
