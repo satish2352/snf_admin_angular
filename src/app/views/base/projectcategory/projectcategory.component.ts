@@ -97,7 +97,7 @@ export class ProjectComponent implements OnInit {
       (response: any) => {
         console.log('API Call Success', response);
         this.Project_Data.push(response.result);
-        alert('recRecord Added successfully!');
+        alert('Record Added successfully!');
         this.showAddForm = false;
       },
       (error) => {
@@ -123,7 +123,7 @@ export class ProjectComponent implements OnInit {
           this.Project_Data[index] = { ...this.Project_Data[index], ...response.result };
         }
         this.fetchProjectsData();
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
         this.resetForm();
       },

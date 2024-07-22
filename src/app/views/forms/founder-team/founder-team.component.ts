@@ -101,7 +101,7 @@ onSearchChange() {
       (response) => {
         console.log(response);
         this.fetchFounderData();
-        alert('recRecord Added successfully!');   
+        alert('Record Added successfully!');   
         this.showAddForm = false;
         //location.reload();
       },
@@ -128,7 +128,7 @@ onSearchChange() {
     (response) => {
       console.log(response);
       this.fetchFounderData();
-      alert('recRecord Updated successfully!');
+      alert('Record Updated successfully!');
       this.showEditForm = false;
      // location.reload();
     },

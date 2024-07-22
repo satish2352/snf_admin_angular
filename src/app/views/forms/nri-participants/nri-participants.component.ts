@@ -101,7 +101,7 @@ export class NriParticipantsComponent implements OnInit{
       (response) => {
         console.log(response);
         this.fetchNriData();
-        alert('recRecord Added successfully!'); 
+        alert('Record Added successfully!'); 
         this.showAddForm = false;
         //location.reload();
       },
@@ -129,7 +129,7 @@ if (this.NriForm.value.imageUrl instanceof File) {
    (response) => {
      console.log(response);
      this.fetchNriData();
-     alert('recRecord Updated successfully!');
+     alert('Record Updated successfully!');
      this.showEditForm = false;
 
    },

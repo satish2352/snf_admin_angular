@@ -132,7 +132,7 @@ onSearchChange() {
         (response) => {
           console.log(response);
           this.fetchsupporterData(); // Refresh the data to reflect the update
-          alert('recRecord Updated successfully!');
+          alert('Record Updated successfully!');
           this.initForm();
           this.showAddForm = false;
           this.selectedItem = { _id: '', name: '', imageUrl: '' }; // Reset selectedItem after update

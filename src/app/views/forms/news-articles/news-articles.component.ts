@@ -111,7 +111,7 @@ export class NewsArticlesComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchNewsData();
-        alert('recRecord Added successfully!');  
+        alert('Record Added successfully!');  
         this.showAddForm = false;
       },
       (error) => {
@@ -140,7 +140,7 @@ export class NewsArticlesComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchNewsData();
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
       },
       (error) => {

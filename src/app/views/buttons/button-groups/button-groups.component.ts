@@ -115,7 +115,7 @@ export class ButtonGroupsComponent implements OnInit {
         (response) => {
           console.log(response);
           this.fetchsnf_in_news_papers_Data();
-          alert('recRecord Added successfully!'); 
+          alert('Record Added successfully!'); 
           this.toggleAddForm();
           this.showAddForm = false;
         },
@@ -170,7 +170,7 @@ export class ButtonGroupsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchsnf_in_news_papers_Data();
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
       },
       (error) => {

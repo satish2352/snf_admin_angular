@@ -164,7 +164,7 @@ export class ColorsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchCarrosalData();
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
         this.showAddForm = false; // Ensure the form is closed
         this.resetForm();

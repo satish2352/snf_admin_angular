@@ -14,7 +14,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let formData of formDataList">
+    <tr *ngFor="let formData of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+      <td>{{ i + 1 + pageIndex * pageSize }}</td>
       <td>{{ formData.name }}</td>
       <td>{{ formData.email }}</td>
       <td>{{ formData.contact }}</td>
@@ -26,3 +27,5 @@
     </tr>
   </tbody>
 </table>
+<mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+</mat-paginator>

@@ -56,9 +56,12 @@
   <div class="container">
     <div class="row justify-content-end">
       <div class="col-auto">
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="input-group custom-search-bar">
+          <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+      </div>
       </div>
       <div class="col-auto">
         <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
@@ -87,7 +90,7 @@
           <img [src]="item.mainImageUrl" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
         </td>
         <td class="text-right">{{ item.Paragraph }}</td>
-        <td class="text-right">{{ item.subtitle }}</td>
+        <td>{{ item.subtitle }}</td>
         <td class="text-right">{{ item.category }}</td>
         <td class="text-right">
           <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;

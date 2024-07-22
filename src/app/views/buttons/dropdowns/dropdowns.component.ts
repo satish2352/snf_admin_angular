@@ -127,7 +127,7 @@ onSearchChange() {
       (response) => {
         console.log(response);
         this.fetchawards_recognation_Data();
-        alert('recRecord Added successfully!');
+        alert('Record Added successfully!');
         this.showAddForm = false;
       },
       (error) => {
@@ -159,7 +159,7 @@ onSearchChange() {
       (response) => {
         console.log(response);
         this.fetchawards_recognation_Data(); 
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
         this.resetForm(); // Reset form after successful update
       },

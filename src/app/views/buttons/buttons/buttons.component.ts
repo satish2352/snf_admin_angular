@@ -122,7 +122,7 @@ export class ButtonsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchNewsartical_Form_Data();
-        alert('recRecord Added successfully!');  
+        alert('Record Added successfully!');  
         this.showAddForm = false;
       },
       (error) => {
@@ -150,7 +150,7 @@ export class ButtonsComponent implements OnInit {
       (response) => {
         console.log(response);
         this.fetchNewsartical_Form_Data();
-        alert('recRecord Updated successfully!');
+        alert('Record Updated successfully!');
         this.showEditForm = false;
         this.resetForm();
       },
@@ -179,6 +179,7 @@ export class ButtonsComponent implements OnInit {
           this.showAddForm = false;
           // Show success alert
           alert('Article deleted successfully!');
+          this.fetchNewsartical_Form_Data();
         },
         (error) => {
           console.error('Error deleting article:', error);

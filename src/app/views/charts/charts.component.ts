@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ContactService } from 'src/app/Service/contact.service';
 
 @Component({
@@ -8,9 +9,14 @@ import { ContactService } from 'src/app/Service/contact.service';
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   [x: string]: any;
   form!: FormGroup;
   formDataList!: any[]; // Array to store retrieved form data
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
 
   constructor(private fb: FormBuilder, private apiService: ContactService) { }
 
@@ -48,6 +54,7 @@ export class ChartsComponent implements OnInit {
     this.apiService.getAllFormData().subscribe(
       response => {
         this.formDataList = response;
+        this.filterData();
         console.log('Form data retrieved successfully:', this.formDataList);
 
       },
@@ -55,6 +62,23 @@ export class ChartsComponent implements OnInit {
         console.error('Error retrieving form data:', error);
       }
     );
+  }
+  
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.formDataList.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+  onSearchChange() {
+    this.filterData();
   }
   // deleteFormData(id: any) {
   //   // Call the API service to delete the specific form data
