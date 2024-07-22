@@ -14,17 +14,17 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'colors',
+        redirectTo: 'slider',
       },
       {
-        path: 'colors',
+        path: 'slider',
         component: ColorsComponent,
         data: {
           title: 'Colors',
         },
       },
       {
-        path: 'typography',
+        path: 'our_supporter',
         component: TypographyComponent,
         data: {
           title: 'Typography',

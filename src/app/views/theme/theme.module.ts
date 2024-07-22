@@ -13,6 +13,7 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DocsComponentsModule } from '@docs-components/docs-components.module';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
+    DocsComponentsModule
   ],
   declarations: [
     ColorsComponent,

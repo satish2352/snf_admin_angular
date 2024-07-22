@@ -15,21 +15,21 @@ const routes: Routes = [
         redirectTo: 'buttons'
       },
       {
-        path: 'buttons',
+        path: 'articles',
         component: ButtonsComponent,
         data: {
           title: 'Buttons'
         }
       },
       {
-        path: 'button-groups',
+        path: 'home_article',
         component: ButtonGroupsComponent,
         data: {
           title: 'Button groups'
         }
       },
       {
-        path: 'dropdowns',
+        path: 'recognition',
         component: DropdownsComponent,
         data: {
           title: 'Dropdowns'

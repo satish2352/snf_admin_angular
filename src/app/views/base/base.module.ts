@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 
+
+
 // CoreUI Modules
 import {
   AccordionModule,
@@ -56,6 +58,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 // import {UpcomingEventComponent} from './upcoming-event/upcoming-event.component'
+
+
+
 
 @NgModule({
   imports: [

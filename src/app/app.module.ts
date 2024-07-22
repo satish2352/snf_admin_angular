@@ -20,6 +20,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DocsComponentsModule } from '@docs-components/docs-components.module';
 
 import {
   AvatarModule,
@@ -40,6 +41,7 @@ import {
   SidebarModule,
   TabsModule,
   UtilitiesModule,
+  
   
   
   
@@ -89,6 +91,7 @@ const APP_CONTAINERS = [
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
+    DocsComponentsModule
   ],
   providers: [
     {

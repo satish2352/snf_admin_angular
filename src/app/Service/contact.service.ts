@@ -18,7 +18,7 @@ export class ContactService {
   }
 
   getAllFormData(): Observable<any> {
-    return this.http.get(`${this.contactUrl}/get-contact-data`);
+    return this.http.get(`${this.contactUrl}/find`);
   }
   // deleteContactData(productId: any) {
   //   return this.http.delete(`${this.contactUrl}/delete/:id`, productId)

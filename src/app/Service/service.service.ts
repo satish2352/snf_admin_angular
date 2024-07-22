@@ -427,7 +427,7 @@ export class ServiceService {
   }
 
   getupcomingimage() {
-    return this.http.get(`https://snf.backend.socialforumindia.com/upcomingeventsRoute/getAllImagesData`)
+    return this.http.get(`${this.upcoming_url}/getAllImagesData`)
   }
 
   updateupcomingimage(id: number, formData: any) {

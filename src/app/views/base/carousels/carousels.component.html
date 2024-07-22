@@ -29,6 +29,13 @@
                   Paragraph is required.
                 </div>
               </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Sub Title:</label>
+                <input type="text"  id="carrosalPara" class="form-control" formControlName="subtitle" placeholder="SubTitle" />
+                <div *ngIf="upcomingproject_Form.get('subtitle')?.touched && upcomingproject_Form.get('subtitle')?.invalid" class="text-danger">
+                  Subtitle is required.
+                </div>
+              </div>
              
               <div class="mb-3">
                 <label for="carrosalImage" class="form-label">Image:</label>
@@ -67,6 +74,7 @@
         <th class="text-right">Project Title</th>
         <th>Image</th>
         <th class="text-right">Paragraph</th>
+        <th class="text-right">Sub Title</th>
         <th class="text-right">category</th>
         <th class="text-right">Action</th>
       </tr>
@@ -79,6 +87,7 @@
           <img [src]="item.mainImageUrl" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
         </td>
         <td class="text-right">{{ item.Paragraph }}</td>
+        <td class="text-right">{{ item.subtitle }}</td>
         <td class="text-right">{{ item.category }}</td>
         <td class="text-right">
           <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
@@ -120,6 +129,13 @@
                 <input type="text" id="carrosalPara" class="form-control" formControlName="Paragraph" />
                 <div *ngIf="upcomingproject_Form.get('Paragraph')?.touched && upcomingproject_Form.get('Paragraph')?.invalid" class="text-danger">
                   Paragraph is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Sub Title:</label>
+                <input type="text"  id="carrosalPara" class="form-control" formControlName="subtitle"  />
+                <div *ngIf="upcomingproject_Form.get('subtitle')?.touched && upcomingproject_Form.get('subtitle')?.invalid" class="text-danger">
+                  Subtitle is required.
                 </div>
               </div>
               <div class="mb-3">

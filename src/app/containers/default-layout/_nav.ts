@@ -13,42 +13,44 @@ export const navItems: INavData[] = [
   {
     title: true,
     // name: 'Theme'
-    name: 'Home'
+    name: 'Admin Panel'
 
   },
   {
     // name: 'Colors',
     name: 'Slider',
-    url: '/theme/colors',
+    url: '/home/slider',
     iconComponent: { name: 'cil-drop' }
   },
   {
     // name: 'Typography',
-    name: 'Our Client',
-    url: '/theme/typography',
-    linkProps: { fragment: 'someAnchor' },
+    name: 'Our Supporter',
+    url: '/home/our_supporter',
+    // linkProps: { fragment: 'someAnchor' },
     iconComponent: { name: 'cil-star' }
   },
   {
     // name: 'Accordion',
     name: 'Testimonial',
-    url: '/base/accordion'
+    url: '/home1/accordion',
+    iconComponent: { name: 'cil-star' }
   },
   {
     // name: 'Button groups',
-    name: 'Home Page Articles',
-    url: '/buttons/button-groups'
+    name: 'Home Articles',
+    url: '/teams/home_article',
+    iconComponent: { name: 'cil-star' }
   },
-  {
-    // name: 'Components',
-    name: 'Project',
-    title: true
-  },
+  // {
+  //   // name: 'Components',
+  //   name: 'Project',
+  //   title: true
+  // },
   {
     // name: 'Base',
     
-    name: 'Our Projects',
-    url: '/base',
+    name: 'Projects',
+    url: '/home1',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       // {
@@ -100,37 +102,37 @@ export const navItems: INavData[] = [
       {
         //name;'projectcategory'
         name:'Add project Category',
-        url:'/base/project'
+        url:'/home1/category'
       },
       {
         //   name: 'Popovers',
-        name: 'On Going Project',
-        url: '/base/carousel'
+        name: 'Add Project',
+        url: '/home1/project'
       },
      
       {
         //   name: 'Popovers',
-        name: 'Add upcoming',
-        url: '/base/tooltips'
+        name: 'Add Project Detail',
+        url: '/home1/project_detail'
       },
     ]
   },
   {
     // name: 'Buttons',
     name: 'Media/Awards',
-    url: '/buttons',
+    url: '/teams',
     iconComponent: { name: 'cil-cursor' },
     children: [
       {
         // name: 'Buttons',
         name: 'Articles',
-        url: '/buttons/buttons'
+        url: '/teams/articles'
       },
       
       {
         // name: 'Dropdowns',
         name: 'Awards Recognition',
-        url: '/buttons/dropdowns'
+        url: '/teams/recognition'
       },
       {
         name:'News And Articles',
@@ -283,11 +285,11 @@ export const navItems: INavData[] = [
   //     }
   //   ]
   // },
-  {
-    title: true,
-    name: 'Links',
-    class: 'py-0'
-  },
+  // {
+  //   title: true,
+  //   name: 'Links',
+  //   class: 'py-0'
+  // },
   // {
   //   name: 'Live Project',
   //   url: 'https://www.socialforumindia.com/cmplpro.php',

@@ -50,7 +50,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'carousel',
+        path: 'project',
         component: CarouselsComponent,
         data: {
           title: 'Carousel',
@@ -106,7 +106,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'project',
+        path: 'category',
         component: ProjectComponent,
         data: {
           title: 'project',
@@ -141,7 +141,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'tooltips',
+        path: 'project_detail',
         component: TooltipsComponent,
         data: {
           title: 'Tooltips',

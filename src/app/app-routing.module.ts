@@ -33,19 +33,19 @@ const routes: Routes = [
   //         import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
   //     },
       {
-        path: 'theme',
+        path: 'home',
         canActivate:[AuthGuard],
         loadChildren: () =>
           import('./views/theme/theme.module').then((m) => m.ThemeModule)
       },
       {
-        path: 'base',
+        path: 'home1',
         canActivate:[AuthGuard],
         loadChildren: () =>
           import('./views/base/base.module').then((m) => m.BaseModule)
       },
       {
-        path: 'buttons',
+        path: 'teams',
         canActivate:[AuthGuard],
         loadChildren: () =>
           import('./views/buttons/buttons.module').then((m) => m.ButtonsModule)

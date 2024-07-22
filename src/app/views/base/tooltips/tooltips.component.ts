@@ -49,9 +49,10 @@ export class TooltipsComponent implements OnInit{
       (response) => {
         console.log(response);
         this.data = response;
+        this.filterData();
         // this.data.sort((a:any, b: any) => b.id - a.id);
         console.log(this.data);
-        this.filterProjects();
+        // this.filterProjects();
        
         
       },
@@ -63,10 +64,12 @@ export class TooltipsComponent implements OnInit{
   
   filterData() {
     const query = this.searchQuery.toLowerCase();
-    this.filteredCarrosalData = this.data.filter((item: { imageTitles: string; }) => 
-      item.imageTitles.toLowerCase().includes(query)
+    this.filteredCarrosalData = this.data.filter((item: { category: string; }) => 
+      item.category.toLowerCase().includes(query)
     );
     this.filteredCarrosalData.sort((a, b) => b.id - a.id);
+    console.log(this.filteredCarrosalData);
+    
   }
 
   onPageChange(event: PageEvent) {

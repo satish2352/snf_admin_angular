@@ -90,7 +90,7 @@ onSearchChange() {
         (response) => {
           console.log(response);
           this.fetchsupporterData();
-          alert('recRecord Added successfully!');
+          alert('Record Added successfully!');
           this.initForm();
           this.toggleAddForm(); // Hide the form after adding supporter
         },
@@ -172,6 +172,7 @@ onSearchChange() {
   
           // Show success alert
           alert('Clients deleted successfully!');
+          this.fetchsupporterData(); 
         },
         (error) => {
           console.error('Error deleting supporter:', error);

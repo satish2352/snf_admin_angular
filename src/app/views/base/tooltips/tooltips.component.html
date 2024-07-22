@@ -70,7 +70,7 @@
         <th class="text-right">Project Title</th>
         <th>Image</th>
        
-        <!-- <th class="text-right">category</th> -->
+        <th class="text-right">category</th>
         <th class="text-right">Action</th>
       </tr>
     </thead>
@@ -82,7 +82,7 @@
           <img [src]="item.images" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
         </td>
        
-        <!-- <td class="text-right">{{ item.category }}</td> -->
+        <td class="text-right">{{ item.category }}</td>
         <td class="text-right">
           <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
           <button class="btn btn-danger" (click)="deleteupcomingproject(item.id)">Delete</button>

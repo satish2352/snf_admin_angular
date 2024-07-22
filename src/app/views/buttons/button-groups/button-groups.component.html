@@ -8,7 +8,7 @@
                         <form [formGroup]="snf_in_news_papers_Form" (ngSubmit)="addsnf_in_news_papers()">
                             <div class="mb-3">
                                 <label for="carrosalName" class="form-label">Name:</label>
-                                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                                <input type="text" id="carrosalName" class="form-control" formControlName="name" placeholder="Name"/>
                                 <div *ngIf="snf_in_news_papers_Form.get('name')?.touched && snf_in_news_papers_Form.get('name')?.invalid" class="text-danger">
                                     Name is required.
                                   </div>

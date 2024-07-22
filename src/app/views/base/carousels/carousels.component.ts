@@ -247,7 +247,7 @@ export class CarouselsComponent implements OnInit {
   upcomingproject_Form!: FormGroup;
   upcomingProject_Data:any;
 
-  selectedItem: any = { id: '', ProjectTitle: '', Paragraph: '', category: '', mainImage: '' };
+  selectedItem: any = { id: '', ProjectTitle: '', Paragraph: '',subtitle:'', category: '', mainImage: '' };
   categories: any[] = [];
   selectedCategory: string = '';
   showAddForm: boolean = false;
@@ -271,6 +271,7 @@ export class CarouselsComponent implements OnInit {
     this.upcomingproject_Form = this.fb.group({
       ProjectTitle: ['', Validators.required],
       Paragraph: ['', Validators.required],
+      subtitle: ['', Validators.required],
       category: ['', Validators.required],
       mainImage: [null]
     });
@@ -363,6 +364,7 @@ export class CarouselsComponent implements OnInit {
     this.upcomingproject_Form.patchValue({
       ProjectTitle: item.ProjectTitle,
       Paragraph: item.Paragraph,
+      subtitle:item.subtitle,
       category: item.category,
       mainImage: null
     });
@@ -386,6 +388,7 @@ export class CarouselsComponent implements OnInit {
     const formData = new FormData();
     formData.append('ProjectTitle', this.upcomingproject_Form.value.ProjectTitle);
     formData.append('Paragraph', this.upcomingproject_Form.value.Paragraph);
+    formData.append('subtitle', this.upcomingproject_Form.value.subtitle);
     formData.append('category', this.upcomingproject_Form.value.category);
     formData.append('mainImage', this.upcomingproject_Form.value.mainImage);
 
@@ -413,6 +416,7 @@ export class CarouselsComponent implements OnInit {
     const formData = new FormData();
     formData.append('ProjectTitle', this.upcomingproject_Form.value.ProjectTitle);
     formData.append('Paragraph', this.upcomingproject_Form.value.Paragraph);
+    formData.append('subtitle', this.upcomingproject_Form.value.subtitle);
     formData.append('category', this.upcomingproject_Form.value.category);
 
     if (this.upcomingproject_Form.value.mainImageUrl) {
